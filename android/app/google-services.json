@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "910240519772",
+    "firebase_url": "https://temparty-12538-default-rtdb.firebaseio.com",
+    "project_id": "temparty-12538",
+    "storage_bucket": "temparty-12538.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910240519772:android:2818576cf14e1b74fbb899",
+        "android_client_info": {
+          "package_name": "com.example.temparty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910240519772-cvfltm7sebbn56sg86pkhr0qlu8nq1o8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIZT7-mA8KizUa-pwXcwcXYbrKuoUaXU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910240519772-cvfltm7sebbn56sg86pkhr0qlu8nq1o8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "910240519772-vihbn2mer4s6odji2lm95uf2f4fbsc87.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.temparty"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910240519772:android:fdeca7b342924e28fbb899",
+        "android_client_info": {
+          "package_name": "com.example.temparty_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910240519772-cvfltm7sebbn56sg86pkhr0qlu8nq1o8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIZT7-mA8KizUa-pwXcwcXYbrKuoUaXU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910240519772-cvfltm7sebbn56sg86pkhr0qlu8nq1o8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "910240519772-vihbn2mer4s6odji2lm95uf2f4fbsc87.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.temparty"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910240519772:android:92e94f1b82529fedfbb899",
+        "android_client_info": {
+          "package_name": "com.temparty.start"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910240519772-cvfltm7sebbn56sg86pkhr0qlu8nq1o8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIZT7-mA8KizUa-pwXcwcXYbrKuoUaXU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910240519772-cvfltm7sebbn56sg86pkhr0qlu8nq1o8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "910240519772-vihbn2mer4s6odji2lm95uf2f4fbsc87.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.temparty"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
