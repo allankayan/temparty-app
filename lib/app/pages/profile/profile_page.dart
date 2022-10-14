@@ -56,7 +56,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 children: [
                                   RawMaterialButton(
                                     onPressed: () {
-                                      controller.logout();
+                                      _logoutDialog(context, controller);
                                     },
                                     elevation: 2.0,
                                     fillColor: Colors.deepPurple,
@@ -95,4 +95,29 @@ class ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+}
+
+void _logoutDialog(BuildContext context, ProfileController controller) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+          title: const Text('Confirmar logout'),
+          titleTextStyle:
+              const TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 20),
+          content: const Text(
+              'Deseja sair desta conta no aplicativo? Você precisará entrar novamente depois.'),
+          actions: [
+            TextButton(
+              child: const Text('Sim'),
+              onPressed: () => controller.logout(),
+            ),
+            ElevatedButton(
+              child: const Text('Não'),
+              onPressed: () => Modular.to.pop(),
+            )
+          ],
+        );
+      });
 }
