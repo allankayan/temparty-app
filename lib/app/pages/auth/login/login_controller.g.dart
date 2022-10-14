@@ -41,22 +41,6 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
-  late final _$errorAtom =
-      Atom(name: '_LoginControllerBase.error', context: context);
-
-  @override
-  String get error {
-    _$errorAtom.reportRead();
-    return super.error;
-  }
-
-  @override
-  set error(String value) {
-    _$errorAtom.reportWrite(value, super.error, () {
-      super.error = value;
-    });
-  }
-
   late final _$loginAsyncAction =
       AsyncAction('_LoginControllerBase.login', context: context);
 
@@ -69,8 +53,7 @@ mixin _$LoginController on _LoginControllerBase, Store {
   String toString() {
     return '''
 email: ${email},
-password: ${password},
-error: ${error}
+password: ${password}
     ''';
   }
 }

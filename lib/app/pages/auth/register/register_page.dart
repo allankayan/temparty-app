@@ -85,6 +85,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                                     child: TextField(
+                                      controller: controller.name,
                                       keyboardType: TextInputType.text,
                                       decoration: const InputDecoration(
                                         prefixIcon: Icon(Icons.account_circle),
@@ -93,7 +94,7 @@ class RegisterPageState extends State<RegisterPage> {
                                             Radius.circular(10),
                                           ),
                                         ),
-                                        labelText: 'seu nome',
+                                        labelText: 'nome e sobrenome',
                                       ),
                                       onChanged: (text) {},
                                     ),
@@ -101,6 +102,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                                     child: TextField(
+                                      controller: controller.email,
                                       keyboardType: TextInputType.emailAddress,
                                       decoration: const InputDecoration(
                                         prefixIcon: Icon(Icons.email_rounded),
@@ -117,6 +119,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                                     child: TextField(
+                                      controller: controller.password,
                                       obscureText: true,
                                       keyboardType: TextInputType.visiblePassword,
                                       decoration: const InputDecoration(
@@ -134,6 +137,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                                     child: TextField(
+                                      controller: controller.passwordVerification,
                                       obscureText: true,
                                       keyboardType: TextInputType.visiblePassword,
                                       decoration: const InputDecoration(
@@ -159,7 +163,9 @@ class RegisterPageState extends State<RegisterPage> {
                                         ),
                                         minimumSize: const Size(double.infinity, 45),
                                       ),
-                                      onPressed: () async {},
+                                      onPressed: () async {
+                                        controller.createAccount();
+                                      },
                                       child: const Text('CRIAR CONTA'),
                                     ),
                                   ),
@@ -173,7 +179,7 @@ class RegisterPageState extends State<RegisterPage> {
                                       minimumSize: const Size(double.infinity, 45),
                                     ),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/login');
+                                      Modular.to.pop();
                                     },
                                     child: const Text('JÁ TENHO CONTA'),
                                   ),

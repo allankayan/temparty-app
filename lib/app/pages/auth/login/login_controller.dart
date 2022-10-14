@@ -15,12 +15,9 @@ abstract class _LoginControllerBase with Store {
   @observable
   TextEditingController password = TextEditingController();
 
-  @observable
-  late String error;
-
   @action
   Future<void> login() async {
-    if (email.text != "" && password.text.length >= 6) {
+    if (email.text != "") {
       try {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email.text, password: password.text);

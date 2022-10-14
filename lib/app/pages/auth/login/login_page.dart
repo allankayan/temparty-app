@@ -123,7 +123,7 @@ class LoginPageState extends State<LoginPage> {
                           minimumSize: const Size(double.infinity, 45),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/register');
+                          Modular.to.pushNamed('/register/');
                         },
                         child: const Text('CRIE UMA CONTA'),
                       ),

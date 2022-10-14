@@ -74,6 +74,17 @@ class ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding: const EdgeInsets.all(10),
                               child: Text(
+                                controller.user.displayName!,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
                                 controller.user.email!,
                                 style: const TextStyle(
                                   fontSize: 22,
