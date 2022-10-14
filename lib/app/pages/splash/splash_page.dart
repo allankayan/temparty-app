@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class SplashPage extends StatefulWidget {
   final String title;
@@ -16,14 +17,18 @@ class SplashPageState extends State<SplashPage> {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       (user == null)
           ? Future.delayed(const Duration(seconds: 5), () {
-              setState(() {
-                Navigator.pushReplacementNamed(context, '/login/');
-              });
+              if (mounted) {
+                setState(() {
+                  Modular.to.pushReplacementNamed('/login/');
+                });
+              }
             })
           : Future.delayed(const Duration(seconds: 5), () {
-              setState(() {
-                Navigator.pushReplacementNamed(context, '/main/');
-              });
+              if (mounted) {
+                setState(() {
+                  Modular.to.pushReplacementNamed('/main/');
+                });
+              }
             });
     });
   }
