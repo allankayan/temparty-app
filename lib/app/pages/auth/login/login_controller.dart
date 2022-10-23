@@ -24,7 +24,6 @@ abstract class _LoginControllerBase with Store {
     if (email.text != "") {
       try {
         await login.login(email.text, password.text);
-        Modular.to.pushReplacementNamed('/main');
       } on FirebaseAuthException catch (e) {
         Fluttertoast.showToast(
           msg: e.message!,

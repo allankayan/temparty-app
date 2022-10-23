@@ -2,10 +2,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class UserLocalStorage {
+class UserLocalDataSource {
   final FlutterSecureStorage _secureStorage;
 
-  UserLocalStorage(this._secureStorage);
+  UserLocalDataSource(this._secureStorage);
 
   Future<void> saveUserData(String userData) async {
     return await _secureStorage.write(key: 'user', value: userData);

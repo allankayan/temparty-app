@@ -134,17 +134,19 @@ class ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 40),
-                                    child: Text(
-                                      user.email!,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                  ),
+                                  (user.bio != null)
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(bottom: 40),
+                                          child: Text(
+                                            user.bio ?? "",
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
                                   const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Padding(

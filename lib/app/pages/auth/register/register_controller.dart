@@ -39,29 +39,13 @@ abstract class _RegisterControllerBase with Store {
         passwordVerification.text != "") {
       if (password.text == passwordVerification.text) {
         try {
-          register.register(email.text, name.text, date.text, password.text);
-          Modular.to.pushReplacementNamed('/main');
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'weak-password') {
-            Fluttertoast.showToast(
-              msg:
-                  'Senha muito fraca, utilize letras maiusculas, minusculas, caracteres especiais, números etc.',
-              toastLength: Toast.LENGTH_LONG,
-              backgroundColor: Colors.deepPurple,
-            );
-          } else if (e.code == 'email-already-in-use') {
-            Fluttertoast.showToast(
-              msg: 'Esta email já está cadastrado no aplicativo, efetue o login.',
-              toastLength: Toast.LENGTH_LONG,
-              backgroundColor: Colors.deepPurple,
-            );
-          } else {
-            Fluttertoast.showToast(
-              msg: e.message!,
-              toastLength: Toast.LENGTH_LONG,
-              backgroundColor: Colors.deepPurple,
-            );
-          }
+          await register.register(email.text, name.text, date.text, password.text);
+        } on Exception catch (e) {
+          Fluttertoast.showToast(
+            msg: '$e',
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.deepPurple,
+          );
         }
       } else {
         Fluttertoast.showToast(
@@ -72,7 +56,7 @@ abstract class _RegisterControllerBase with Store {
       }
     } else {
       Fluttertoast.showToast(
-        msg: 'Preencha corretamente as suas informações',
+        msg: 'Preencha corretamente todas as informações',
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.deepPurple,
       );

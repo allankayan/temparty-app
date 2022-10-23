@@ -1,49 +1,48 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temparty/app/data/local/user_local_storage.dart';
+import 'package:temparty/app/data/data_sources/user/user_local_data_source.dart';
+import 'package:temparty/app/data/data_sources/user/user_remote_data_source.dart';
 import 'package:temparty/app/data/model/user_model.dart';
 
 @injectable
 class UserRepository {
-  final UserLocalStorage _userLocal;
-  late StreamSubscription<DatabaseEvent?> _userStream;
-  final DatabaseReference ref = FirebaseDatabase.instance.ref().child("users");
-  late User? currentUser;
+  final UserLocalDataSource _userLocal;
+  final UserRemoteDataSource _userRemote;
 
-  UserRepository(this._userLocal) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        currentUser = FirebaseAuth.instance.currentUser;
-        // _userStream = ref.child(currentUser!.uid).onValue.listen((DatabaseEvent event) {
-        //   final data = event.snapshot.value as Map<dynamic, dynamic>;
-        //   _onListenUser(UserModel.fromJson(data));
-        // });
-      } else {
-        null;
-      }
-    });
-  }
+  UserRepository(this._userLocal, this._userRemote);
 
-  // void _onListenUser(UserModel? user) async {
-  //   await updateCurrentUserInfo();
-  // }
-  Future<UserModel?> getUser() async {
+  Future<UserModel?> getUserData() async {
     final user = await _userLocal.getUserData();
     if (user != null) return UserModel.fromJson(jsonDecode(user));
-    return null;
+    return _userRemote.getUserData();
   }
 
-  Future<UserModel?> saveUser() async {
-    final snapshot = await ref.child(currentUser!.uid).get();
-    final data = snapshot.value as Map<dynamic, dynamic>;
+  Future<void> loginUser() async {
+    await _userLocal.deleteUserData();
+    final userData = await _userRemote.getUserData();
+    await _userLocal.saveUserData(jsonEncode(userData));
+  }
 
-    if (snapshot.value != null) return UserModel.fromJson(data);
-    return null;
+  Future<void> createUserData(Map<String, String> data) async {
+    await _userLocal.deleteUserData();
+    final userData = jsonEncode(data);
+    final user = UserModel.fromJson(jsonDecode(userData));
+
+    await _userRemote.createUserData(user);
+  }
+
+  // Future<void> saveUserData(String user) async {
+  //   final userData = UserModel.fromJson(jsonDecode(user));
+  //   await _userRemote.saveUser(userData);
+  //   await _userLocal.saveUserData(jsonEncode(userData));
+  // }
+
+  Future<void> updateUserData(String user) async {
+    final userData = UserModel.fromJson(jsonDecode(user));
+    await _userRemote.updateUserData(userData);
+    await _userLocal.deleteUserData();
+    await _userLocal.saveUserData(jsonEncode(userData));
   }
 }
