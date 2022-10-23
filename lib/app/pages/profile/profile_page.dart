@@ -1,7 +1,9 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:temparty/app/pages/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:temparty/app/widgets/event_card_widget.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;
@@ -13,96 +15,185 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   final ProfileController controller = Modular.get();
 
+  final covers = [
+    const AssetImage('assets/images/teste2.jpg'),
+    const AssetImage('assets/images/teste3.png'),
+    const AssetImage('assets/images/teste.png'),
+    const AssetImage('assets/images/teste2.jpg'),
+    const AssetImage('assets/images/teste3.png'),
+    const AssetImage('assets/images/teste2.jpg'),
+    const AssetImage('assets/images/teste3.png'),
+    const AssetImage('assets/images/teste.png'),
+    const AssetImage('assets/images/teste2.jpg'),
+    const AssetImage('assets/images/teste3.png'),
+    null,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 20),
-                child: Image(
-                  width: 140,
-                  image: AssetImage('assets/images/temparty.png'),
-                  fit: BoxFit.contain,
+      body: Observer(
+        builder: (context) {
+          final user = controller.user.value;
+          if (user != null) {
+            return Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(15),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Padding(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.only(top: 40, bottom: 20),
+                      child: Image(
+                        width: 140,
+                        image: AssetImage('assets/images/temparty.png'),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(15),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.white,
+                            child: Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  RawMaterialButton(
-                                    onPressed: () {
-                                      _logoutDialog(context, controller);
-                                    },
-                                    elevation: 2.0,
-                                    fillColor: Colors.deepPurple,
-                                    padding: const EdgeInsets.all(12.0),
-                                    shape: const CircleBorder(),
-                                    child: const Icon(
-                                      Icons.logout,
-                                      size: 24.0,
-                                      color: Colors.white,
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ElevatedButton.icon(
+                                          onPressed: () async {
+                                            await Modular.to
+                                                .pushNamed('/profile/edit')
+                                                .then((value) => setState((() {})));
+                                          },
+                                          label: const Text("Editar perfil"),
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            size: 20.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            _logoutDialog(context, controller);
+                                          },
+                                          label: const Text("Sair"),
+                                          icon: const Icon(
+                                            Icons.logout,
+                                            size: 20.0,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
+                                  ),
+                                  ClipOval(
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: user.profileImage == null
+                                          ? SizedBox(
+                                              width: 128,
+                                              height: 128,
+                                              child: Image.asset(
+                                                'assets/images/avatar.jpg',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            )
+                                          : FadeInImage.memoryNetwork(
+                                              placeholder: kTransparentImage,
+                                              image: user.profileImage!,
+                                              fit: BoxFit.cover,
+                                              width: 128,
+                                              height: 128,
+                                            ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20, bottom: 4),
+                                    child: Text(
+                                      user.displayName!,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.deepPurple,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 40),
+                                    child: Text(
+                                      user.email!,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'Eventos que estive presente:',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height,
+                                    child: ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount: 6,
+                                      scrollDirection: Axis.vertical,
+                                      itemBuilder: (context, index) {
+                                        return EventCardWidget(
+                                          image: covers[index],
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                controller.user.displayName!,
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.deepPurple,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                controller.user.email!,
-                                style: const TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.deepPurple,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            );
+          } else {
+            return const SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -122,7 +213,7 @@ void _logoutDialog(BuildContext context, ProfileController controller) {
           actions: [
             TextButton(
               child: const Text('Sim'),
-              onPressed: () => controller.logout(),
+              onPressed: () => controller.signOut(),
             ),
             ElevatedButton(
               child: const Text('Não'),

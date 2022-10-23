@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_controller.dart';
+part of 'edit_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,29 +8,30 @@ part of 'profile_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$ProfileController on _ProfileControllerBase, Store {
+mixin _$EditController on _EditControllerBase, Store {
   late final _$userAtom =
-      Atom(name: '_ProfileControllerBase.user', context: context);
+      Atom(name: '_EditControllerBase.user', context: context);
 
   @override
-  ObservableFuture<UserModel> get user {
+  User get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(ObservableFuture<UserModel> value) {
+  set user(User value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
   }
 
-  late final _$signOutAsyncAction =
-      AsyncAction('_ProfileControllerBase.signOut', context: context);
+  late final _$updateAccountAsyncAction =
+      AsyncAction('_EditControllerBase.updateAccount', context: context);
 
   @override
-  Future<void> signOut() {
-    return _$signOutAsyncAction.run(() => super.signOut());
+  Future<void> updateAccount(String newName, String newEmail) {
+    return _$updateAccountAsyncAction
+        .run(() => super.updateAccount(newName, newEmail));
   }
 
   @override
