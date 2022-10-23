@@ -74,8 +74,9 @@ class SearchPageState extends State<SearchPage> {
                               hintText: 'Nome do evento',
                               textEditingController: controller.search,
                               buttonColour: Colors.deepPurple,
-                              secondaryButtonIconColour: Colors.white,
-                              buttonIconColour: Colors.white,
+                              buttonWidget: const Icon(Icons.search),
+                              secondaryButtonWidget: const Icon(Icons.search),
+                              trailingWidget: const Icon(Icons.search),
                               onFieldSubmitted: () {
                                 setState(() {
                                   controller.search.clear();
