@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
+import 'package:temparty/app/data/use_cases/auth/login.dart';
+import 'package:temparty/dir/dir.dart';
 
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
+  final login = getIt.get<Login>();
+
   @observable
   TextEditingController email = TextEditingController();
 
@@ -16,11 +20,10 @@ abstract class _LoginControllerBase with Store {
   TextEditingController password = TextEditingController();
 
   @action
-  Future<void> login() async {
+  Future<void> signIn() async {
     if (email.text != "") {
       try {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email.text, password: password.text);
+        await login.login(email.text, password.text);
         Modular.to.pushReplacementNamed('/main');
       } on FirebaseAuthException catch (e) {
         Fluttertoast.showToast(
@@ -29,12 +32,6 @@ abstract class _LoginControllerBase with Store {
           backgroundColor: Colors.deepPurple,
         );
       }
-    } else {
-      Fluttertoast.showToast(
-        msg: 'Preencha corretamente as suas informações',
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.deepPurple,
-      );
-    }
+    } else {}
   }
 }

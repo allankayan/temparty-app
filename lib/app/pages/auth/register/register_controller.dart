@@ -1,14 +1,20 @@
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
+import 'package:temparty/app/data/use_cases/auth/register.dart';
+import 'package:temparty/dir/dir.dart';
 
 part 'register_controller.g.dart';
 
 class RegisterController = _RegisterControllerBase with _$RegisterController;
 
 abstract class _RegisterControllerBase with Store {
+  final register = getIt.get<Register>();
+
   @observable
   TextEditingController name = TextEditingController();
 
@@ -21,15 +27,19 @@ abstract class _RegisterControllerBase with Store {
   @observable
   TextEditingController passwordVerification = TextEditingController();
 
+  @observable
+  TextEditingController date = MaskedTextController(mask: '00/00/0000');
+
   @action
   Future<void> createAccount() async {
-    if (email.text != "") {
+    if (email.text != "" &&
+        name.text != "" &&
+        date.text != "" &&
+        password.text != "" &&
+        passwordVerification.text != "") {
       if (password.text == passwordVerification.text) {
         try {
-          await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(email: email.text, password: password.text);
-          User user = FirebaseAuth.instance.currentUser!;
-          await user.updateDisplayName(name.text);
+          register.register(email.text, name.text, date.text, password.text);
           Modular.to.pushReplacementNamed('/main');
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {

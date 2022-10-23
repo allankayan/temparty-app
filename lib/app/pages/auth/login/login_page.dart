@@ -102,7 +102,7 @@ class LoginPageState extends State<LoginPage> {
                             minimumSize: const Size(double.infinity, 45),
                           ),
                           onPressed: () async {
-                            controller.login();
+                            controller.signIn();
                           },
                           child: const Text('ENTRAR'),
                         ),

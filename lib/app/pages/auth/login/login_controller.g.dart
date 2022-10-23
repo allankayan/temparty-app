@@ -41,12 +41,12 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
-  late final _$loginAsyncAction =
-      AsyncAction('_LoginControllerBase.login', context: context);
+  late final _$signInAsyncAction =
+      AsyncAction('_LoginControllerBase.signIn', context: context);
 
   @override
-  Future<void> login() {
-    return _$loginAsyncAction.run(() => super.login());
+  Future<void> signIn() {
+    return _$signInAsyncAction.run(() => super.signIn());
   }
 
   @override
