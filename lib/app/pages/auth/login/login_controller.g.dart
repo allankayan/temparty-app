@@ -41,6 +41,38 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: '_LoginControllerBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  late final _$btnControllerAtom =
+      Atom(name: '_LoginControllerBase.btnController', context: context);
+
+  @override
+  RoundedLoadingButtonController get btnController {
+    _$btnControllerAtom.reportRead();
+    return super.btnController;
+  }
+
+  @override
+  set btnController(RoundedLoadingButtonController value) {
+    _$btnControllerAtom.reportWrite(value, super.btnController, () {
+      super.btnController = value;
+    });
+  }
+
   late final _$signInAsyncAction =
       AsyncAction('_LoginControllerBase.signIn', context: context);
 
@@ -53,7 +85,9 @@ mixin _$LoginController on _LoginControllerBase, Store {
   String toString() {
     return '''
 email: ${email},
-password: ${password}
+password: ${password},
+isLoading: ${isLoading},
+btnController: ${btnController}
     ''';
   }
 }
