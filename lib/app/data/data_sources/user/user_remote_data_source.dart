@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,28 +8,7 @@ import 'package:temparty/app/data/model/user_model.dart';
 @injectable
 class UserRemoteDataSource {
   final DatabaseReference ref = FirebaseDatabase.instance.ref().child("users");
-  late User? currentUser;
-
-  UserRemoteDataSource() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        currentUser = FirebaseAuth.instance.currentUser;
-      } else {
-        null;
-      }
-    });
-  }
-
-  // Stream<UserModel?> streamUser() {
-  //   dynamic snapshot;
-  //   dynamic data;
-  //   ref.child(currentUser!.uid).onValue.listen((DatabaseEvent event) {
-  //     snapshot = event.snapshot.value;
-  //     data = snapshot as Map<dynamic, dynamic>;
-  //   });
-  //   if (snapshot != null) return updateUser(data);
-  //   return null;
-  // }
+  late User? currentUser = FirebaseAuth.instance.currentUser;
 
   Future<UserModel?> getUserData() async {
     final snapshot = await ref.child(currentUser!.uid).get();
@@ -42,8 +21,7 @@ class UserRemoteDataSource {
     await ref.child(user!.userUid!).set(user.toJson());
   }
 
-  Future<void> updateUserData(UserModel? user) async {
-    final data = jsonEncode(user);
-    await ref.child(user!.userUid!).update(jsonDecode(data));
+  Future<void> updateUserData(Map<String, String>? user) async {
+    await ref.child(currentUser!.uid).update(user!);
   }
 }

@@ -78,7 +78,9 @@ class ProfilePageState extends State<ProfilePage> {
                                           onPressed: () async {
                                             await Modular.to
                                                 .pushNamed('/profile/edit')
-                                                .then((value) => setState((() {})));
+                                                .then((value) => setState(() async {
+                                                      await controller.refreshPage();
+                                                    }));
                                           },
                                           label: const Text("Editar perfil"),
                                           icon: const Icon(

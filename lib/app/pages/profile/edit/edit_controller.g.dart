@@ -13,15 +13,63 @@ mixin _$EditController on _EditControllerBase, Store {
       Atom(name: '_EditControllerBase.user', context: context);
 
   @override
-  User get user {
+  ObservableFuture<UserModel> get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(User value) {
+  set user(ObservableFuture<UserModel> value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
+    });
+  }
+
+  late final _$nameAtom =
+      Atom(name: '_EditControllerBase.name', context: context);
+
+  @override
+  TextEditingController get name {
+    _$nameAtom.reportRead();
+    return super.name;
+  }
+
+  @override
+  set name(TextEditingController value) {
+    _$nameAtom.reportWrite(value, super.name, () {
+      super.name = value;
+    });
+  }
+
+  late final _$bioAtom =
+      Atom(name: '_EditControllerBase.bio', context: context);
+
+  @override
+  TextEditingController get bio {
+    _$bioAtom.reportRead();
+    return super.bio;
+  }
+
+  @override
+  set bio(TextEditingController value) {
+    _$bioAtom.reportWrite(value, super.bio, () {
+      super.bio = value;
+    });
+  }
+
+  late final _$dateAtom =
+      Atom(name: '_EditControllerBase.date', context: context);
+
+  @override
+  TextEditingController get date {
+    _$dateAtom.reportRead();
+    return super.date;
+  }
+
+  @override
+  set date(TextEditingController value) {
+    _$dateAtom.reportWrite(value, super.date, () {
+      super.date = value;
     });
   }
 
@@ -29,15 +77,17 @@ mixin _$EditController on _EditControllerBase, Store {
       AsyncAction('_EditControllerBase.updateAccount', context: context);
 
   @override
-  Future<void> updateAccount(String newName, String newEmail) {
-    return _$updateAccountAsyncAction
-        .run(() => super.updateAccount(newName, newEmail));
+  Future<void> updateAccount() {
+    return _$updateAccountAsyncAction.run(() => super.updateAccount());
   }
 
   @override
   String toString() {
     return '''
-user: ${user}
+user: ${user},
+name: ${name},
+bio: ${bio},
+date: ${date}
     ''';
   }
 }

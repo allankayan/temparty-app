@@ -25,6 +25,14 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
     });
   }
 
+  late final _$refreshPageAsyncAction =
+      AsyncAction('_ProfileControllerBase.refreshPage', context: context);
+
+  @override
+  Future<void> refreshPage() {
+    return _$refreshPageAsyncAction.run(() => super.refreshPage());
+  }
+
   late final _$signOutAsyncAction =
       AsyncAction('_ProfileControllerBase.signOut', context: context);
 

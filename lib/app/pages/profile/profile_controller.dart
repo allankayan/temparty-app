@@ -13,6 +13,11 @@ abstract class _ProfileControllerBase with Store {
   final logout = getIt.get<Logout>();
   final getUserData = getIt.get<GetUserData>();
 
+  @action
+  Future<void> refreshPage() async {
+    user = getUserData.getUserData().asObservable();
+  }
+
   @observable
   late ObservableFuture<UserModel> user = getUserData.getUserData().asObservable();
 
