@@ -1,8 +1,5 @@
 import 'package:extended_masked_text/extended_masked_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
 import 'package:temparty/app/data/use_cases/auth/register.dart';

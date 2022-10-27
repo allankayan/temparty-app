@@ -52,7 +52,7 @@ class RegisterPageState extends State<RegisterPage> {
                           const Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+                              padding: EdgeInsets.only(top: 20.0, left: 20.0),
                               child: Text(
                                 'CRIAR UMA CONTA',
                                 style: TextStyle(
@@ -78,7 +78,7 @@ class RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height,
+                            height: MediaQuery.of(context).size.height * 0.7,
                             child: Stepper(
                               physics: const NeverScrollableScrollPhysics(),
                               type: StepperType.vertical,

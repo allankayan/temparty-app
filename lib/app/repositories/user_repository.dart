@@ -33,16 +33,9 @@ class UserRepository {
     await _userRemote.createUserData(user);
   }
 
-  // Future<void> saveUserData(String user) async {
-  //   final userData = UserModel.fromJson(jsonDecode(user));
-  //   await _userRemote.saveUser(userData);
-  //   await _userLocal.saveUserData(jsonEncode(userData));
-  // }
-
-  Future<void> updateUserData(String user) async {
-    final userData = UserModel.fromJson(jsonDecode(user));
-    await _userRemote.updateUserData(userData);
+  Future<void> updateUserData(Map<String, String> data) async {
+    await _userRemote.updateUserData(data);
     await _userLocal.deleteUserData();
-    await _userLocal.saveUserData(jsonEncode(userData));
+    await getUserData();
   }
 }

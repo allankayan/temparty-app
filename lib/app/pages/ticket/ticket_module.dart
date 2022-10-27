@@ -10,6 +10,6 @@ class TicketModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => TicketPage()),
+    ChildRoute('/', child: (_, args) => const TicketPage()),
   ];
 }

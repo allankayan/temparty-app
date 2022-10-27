@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +62,6 @@ class AuthRepository {
   Future<void> logout() async {
     try {
       await _userLocal.deleteUserData();
-      print(await _userLocal.getUserData());
       await FirebaseAuth.instance.signOut();
     } catch (e) {
       Fluttertoast.showToast(
