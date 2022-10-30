@@ -11,10 +11,9 @@ import 'package:temparty/app/repositories/user_repository.dart';
 @injectable
 class AuthRepository {
   DatabaseReference ref = FirebaseDatabase.instance.ref("users");
-  final UserLocalDataSource _userLocal;
   final UserRepository _userRepository;
 
-  AuthRepository(this._userLocal, this._userRepository);
+  AuthRepository(this._userRepository);
 
   Future<void> login(String email, String password) async {
     try {

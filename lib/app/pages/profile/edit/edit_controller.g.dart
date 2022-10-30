@@ -73,6 +73,38 @@ mixin _$EditController on _EditControllerBase, Store {
     });
   }
 
+  late final _$imageAtom =
+      Atom(name: '_EditControllerBase.image', context: context);
+
+  @override
+  XFile? get image {
+    _$imageAtom.reportRead();
+    return super.image;
+  }
+
+  @override
+  set image(XFile? value) {
+    _$imageAtom.reportWrite(value, super.image, () {
+      super.image = value;
+    });
+  }
+
+  late final _$imageFromGalleryAsyncAction =
+      AsyncAction('_EditControllerBase.imageFromGallery', context: context);
+
+  @override
+  Future<dynamic> imageFromGallery() {
+    return _$imageFromGalleryAsyncAction.run(() => super.imageFromGallery());
+  }
+
+  late final _$imageFromCameraAsyncAction =
+      AsyncAction('_EditControllerBase.imageFromCamera', context: context);
+
+  @override
+  Future<dynamic> imageFromCamera() {
+    return _$imageFromCameraAsyncAction.run(() => super.imageFromCamera());
+  }
+
   late final _$updateAccountAsyncAction =
       AsyncAction('_EditControllerBase.updateAccount', context: context);
 
@@ -81,13 +113,31 @@ mixin _$EditController on _EditControllerBase, Store {
     return _$updateAccountAsyncAction.run(() => super.updateAccount());
   }
 
+  late final _$deleteProfileImageAsyncAction =
+      AsyncAction('_EditControllerBase.deleteProfileImage', context: context);
+
+  @override
+  Future<void> deleteProfileImage() {
+    return _$deleteProfileImageAsyncAction
+        .run(() => super.deleteProfileImage());
+  }
+
+  late final _$refreshPageAsyncAction =
+      AsyncAction('_EditControllerBase.refreshPage', context: context);
+
+  @override
+  Future<void> refreshPage() {
+    return _$refreshPageAsyncAction.run(() => super.refreshPage());
+  }
+
   @override
   String toString() {
     return '''
 user: ${user},
 name: ${name},
 bio: ${bio},
-date: ${date}
+date: ${date},
+image: ${image}
     ''';
   }
 }

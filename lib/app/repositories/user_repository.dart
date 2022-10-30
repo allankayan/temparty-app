@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:temparty/app/data/data_sources/user/user_local_data_source.dart';
 import 'package:temparty/app/data/data_sources/user/user_remote_data_source.dart';
@@ -33,9 +34,14 @@ class UserRepository {
     await _userRemote.createUserData(user);
   }
 
-  Future<void> updateUserData(Map<String, String> data) async {
-    await _userRemote.updateUserData(data);
+  Future<void> updateUserData(Map<String, String> data, XFile? image) async {
+    await _userRemote.updateUserData(data, image);
     await _userLocal.deleteUserData();
+    await getUserData();
+  }
+
+  Future<void> removeProfileImage() async {
+    await _userRemote.removeUserProfileImage();
     await getUserData();
   }
 }

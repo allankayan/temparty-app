@@ -85,29 +85,66 @@ class EditPageState extends State<EditPage> {
                                     ),
                                     Column(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(20.0),
-                                          child: ClipOval(
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              child: user.profileImage == null
-                                                  ? SizedBox(
-                                                      width: 128,
-                                                      height: 128,
-                                                      child: Image.asset(
-                                                        'assets/images/avatar.jpg',
-                                                        fit: BoxFit.cover,
+                                        InkWell(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: Stack(
+                                              children: [
+                                                ClipOval(
+                                                  child: Material(
+                                                      color: Colors.transparent,
+                                                      child: user.profileImage == null
+                                                          ? InkWell(
+                                                              child: SizedBox(
+                                                                width: 128,
+                                                                height: 128,
+                                                                child: Image.asset(
+                                                                  'assets/images/avatar.jpg',
+                                                                  fit: BoxFit.cover,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : InkWell(
+                                                              child: FadeInImage.memoryNetwork(
+                                                                placeholder: kTransparentImage,
+                                                                image: user.profileImage!,
+                                                                fit: BoxFit.cover,
+                                                                width: 128,
+                                                                height: 128,
+                                                              ),
+                                                            )),
+                                                ),
+                                                Positioned(
+                                                  bottom: 0,
+                                                  right: 0,
+                                                  child: ClipOval(
+                                                    child: Container(
+                                                      padding: const EdgeInsets.all(9),
+                                                      decoration: const BoxDecoration(
+                                                        color: Colors.white,
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.grey,
+                                                            blurRadius: 50,
+                                                            spreadRadius: 10,
+                                                            offset: Offset(8, 12),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    )
-                                                  : FadeInImage.memoryNetwork(
-                                                      placeholder: kTransparentImage,
-                                                      image: user.profileImage!,
-                                                      fit: BoxFit.cover,
-                                                      width: 128,
-                                                      height: 128,
+                                                      child: const Icon(
+                                                        Icons.edit,
+                                                        size: 20,
+                                                        color: Colors.deepPurple,
+                                                      ),
                                                     ),
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
+                                          onTap: () {
+                                            _showModalBottomSheet(context);
+                                          },
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -213,5 +250,88 @@ class EditPageState extends State<EditPage> {
         },
       ),
     );
+  }
+
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+          ),
+        ),
+        context: context,
+        builder: (BuildContext context) {
+          return SizedBox(
+            height: (controller.user.value?.profileImage != null)
+                ? MediaQuery.of(context).size.height * 0.3
+                : MediaQuery.of(context).size.height * 0.25,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'Escolha sua foto de perfil',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      controller.imageFromCamera();
+                      Modular.to.pop();
+                    },
+                    label: const Text("Abrir câmera"),
+                    icon: const Icon(
+                      Icons.camera_alt,
+                      size: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      controller.imageFromGallery();
+                      Modular.to.pop();
+                    },
+                    label: const Text("Escolher foto existente"),
+                    icon: const Icon(
+                      Icons.photo,
+                      size: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  (controller.user.value?.profileImage != null)
+                      ? ElevatedButton.icon(
+                          onPressed: () async {
+                            await controller.deleteProfileImage();
+                            Modular.to.pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.redAccent, // Background color
+                          ),
+                          label: const Text("Remover foto atual"),
+                          icon: const Icon(
+                            Icons.delete,
+                            size: 20.0,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const SizedBox(
+                          height: 0,
+                          width: 0,
+                        )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:temparty/app/repositories/user_repository.dart';
 
@@ -7,7 +8,7 @@ class UpdateUserData {
 
   UpdateUserData(this._userRepository);
 
-  Future<void> updateUserData(Map<String, String> data) async {
-    await _userRepository.updateUserData(data);
+  Future<void> updateUserData(Map<String, String> data, XFile? image) async {
+    await _userRepository.updateUserData(data, image);
   }
 }

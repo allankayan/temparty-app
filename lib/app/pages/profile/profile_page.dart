@@ -123,7 +123,7 @@ class ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 4),
+                                    padding: const EdgeInsets.only(top: 10, bottom: 5),
                                     child: Text(
                                       user.displayName!,
                                       textAlign: TextAlign.center,
