@@ -74,6 +74,22 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     });
   }
 
+  late final _$dateAtom =
+      Atom(name: '_RegisterControllerBase.date', context: context);
+
+  @override
+  TextEditingController get date {
+    _$dateAtom.reportRead();
+    return super.date;
+  }
+
+  @override
+  set date(TextEditingController value) {
+    _$dateAtom.reportWrite(value, super.date, () {
+      super.date = value;
+    });
+  }
+
   late final _$createAccountAsyncAction =
       AsyncAction('_RegisterControllerBase.createAccount', context: context);
 
@@ -88,7 +104,8 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
 name: ${name},
 email: ${email},
 password: ${password},
-passwordVerification: ${passwordVerification}
+passwordVerification: ${passwordVerification},
+date: ${date}
     ''';
   }
 }

@@ -13,24 +13,32 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
       Atom(name: '_ProfileControllerBase.user', context: context);
 
   @override
-  User get user {
+  ObservableFuture<UserModel> get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(User value) {
+  set user(ObservableFuture<UserModel> value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
   }
 
-  late final _$logoutAsyncAction =
-      AsyncAction('_ProfileControllerBase.logout', context: context);
+  late final _$refreshPageAsyncAction =
+      AsyncAction('_ProfileControllerBase.refreshPage', context: context);
 
   @override
-  Future<void> logout() {
-    return _$logoutAsyncAction.run(() => super.logout());
+  Future<void> refreshPage() {
+    return _$refreshPageAsyncAction.run(() => super.refreshPage());
+  }
+
+  late final _$signOutAsyncAction =
+      AsyncAction('_ProfileControllerBase.signOut', context: context);
+
+  @override
+  Future<void> signOut() {
+    return _$signOutAsyncAction.run(() => super.signOut());
   }
 
   @override
