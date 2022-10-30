@@ -24,6 +24,5 @@ abstract class _ProfileControllerBase with Store {
   @action
   Future<void> signOut() async {
     await logout.logout();
-    Modular.to.pushReplacementNamed('/login');
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:temparty/app/data/data_sources/user/user_local_data_source.dart';
 import 'package:temparty/app/repositories/user_repository.dart';
 
@@ -60,15 +61,25 @@ class AuthRepository {
   }
 
   Future<void> logout() async {
-    try {
-      await _userLocal.deleteUserData();
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      Fluttertoast.showToast(
-        msg: e as String,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.deepPurple,
-      );
+    await FirebaseAuth.instance.signOut();
+    await _deleteCacheDir();
+    await _deleteAppDir();
+    Modular.to.pushNamedAndRemoveUntil('/', (p0) => false);
+  }
+
+  Future<void> _deleteCacheDir() async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+    }
+  }
+
+  Future<void> _deleteAppDir() async {
+    final appDir = await getApplicationSupportDirectory();
+
+    if (appDir.existsSync()) {
+      appDir.deleteSync(recursive: true);
     }
   }
 }
