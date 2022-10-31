@@ -122,6 +122,16 @@ mixin _$EditController on _EditControllerBase, Store {
         .run(() => super.deleteProfileImage());
   }
 
+  late final _$changeToEventOrganizerAsyncAction = AsyncAction(
+      '_EditControllerBase.changeToEventOrganizer',
+      context: context);
+
+  @override
+  Future<void> changeToEventOrganizer(bool? value) {
+    return _$changeToEventOrganizerAsyncAction
+        .run(() => super.changeToEventOrganizer(value));
+  }
+
   late final _$refreshPageAsyncAction =
       AsyncAction('_EditControllerBase.refreshPage', context: context);
 

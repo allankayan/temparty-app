@@ -17,12 +17,13 @@ import '../app/data/use_cases/auth/logout.dart' as _i11;
 import '../app/data/use_cases/auth/register.dart' as _i12;
 import '../app/data/use_cases/user/get_user_data.dart' as _i9;
 import '../app/data/use_cases/user/remove_profile_image.dart' as _i13;
-import '../app/data/use_cases/user/update_user_data.dart' as _i14;
+import '../app/data/use_cases/user/update_organizer_account.dart' as _i14;
+import '../app/data/use_cases/user/update_user_data.dart' as _i15;
 import '../app/repositories/auth_repository.dart' as _i8;
 import '../app/repositories/user_repository.dart' as _i7;
-import 'modules/local_module.dart' as _i16;
+import 'modules/local_module.dart' as _i17;
 import 'modules/remote_module.dart'
-    as _i15; // ignore_for_file: unnecessary_lambdas
+    as _i16; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -55,11 +56,13 @@ _i1.GetIt $initGetIt(
   gh.singleton<_i12.Register>(_i12.Register(get<_i8.AuthRepository>()));
   gh.singleton<_i13.RemoveProfileImage>(
       _i13.RemoveProfileImage(get<_i7.UserRepository>()));
-  gh.singleton<_i14.UpdateUserData>(
-      _i14.UpdateUserData(get<_i7.UserRepository>()));
+  gh.singleton<_i14.UpdateOrganizerAccount>(
+      _i14.UpdateOrganizerAccount(get<_i7.UserRepository>()));
+  gh.singleton<_i15.UpdateUserData>(
+      _i15.UpdateUserData(get<_i7.UserRepository>()));
   return get;
 }
 
-class _$RemoteModule extends _i15.RemoteModule {}
+class _$RemoteModule extends _i16.RemoteModule {}
 
-class _$LocalModule extends _i16.LocalModule {}
+class _$LocalModule extends _i17.LocalModule {}

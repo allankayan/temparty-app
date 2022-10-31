@@ -224,6 +224,24 @@ class EditPageState extends State<EditPage> {
                                             backgroundColor: Colors.deepPurple,
                                           ),
                                         ),
+                                        (user.isOrganizer == null)
+                                            ? TextButton.icon(
+                                                onPressed: () {
+                                                  _organizerDialog(context);
+                                                },
+                                                icon: const Icon(Icons.info),
+                                                label: const Text(
+                                                  'Você organiza eventos? Clique aqui.',
+                                                  style: TextStyle(
+                                                    color: Colors.deepPurple,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              )
+                                            : const SizedBox(
+                                                width: 0,
+                                                height: 0,
+                                              )
                                       ],
                                     ),
                                   ],
@@ -330,6 +348,52 @@ class EditPageState extends State<EditPage> {
                   ],
                 ),
               ),
+            ],
+          );
+        });
+  }
+
+  void _organizerDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+            title: const Text('Seu evento na Temparty'),
+            titleTextStyle:
+                const TextStyle(fontWeight: FontWeight.w700, color: Colors.black, fontSize: 18),
+            content: const Text(
+                'Deseja trocar o tipo de sua conta para organizar eventos dentro de nossa plataforma?'),
+            contentTextStyle:
+                const TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+            actions: [
+              TextButton(
+                child: const Text('Sim'),
+                onPressed: () async {
+                  await controller.changeToEventOrganizer(true);
+                  Fluttertoast.showToast(
+                    msg:
+                        'Caso queira mudar o tipo de sua conta posteriormente, acesse as configurações do aplicativo.',
+                    toastLength: Toast.LENGTH_LONG,
+                    backgroundColor: Colors.deepPurple,
+                  );
+                  Modular.to.pop();
+                },
+              ),
+              ElevatedButton(
+                child: const Text('Não'),
+                onPressed: () async {
+                  await controller.changeToEventOrganizer(false);
+                  Fluttertoast.showToast(
+                    msg:
+                        'Caso queira mudar o tipo de sua conta posteriormente, acesse as configurações do aplicativo.',
+                    toastLength: Toast.LENGTH_LONG,
+                    backgroundColor: Colors.deepPurple,
+                  );
+                  Modular.to.pop();
+                },
+              )
             ],
           );
         });

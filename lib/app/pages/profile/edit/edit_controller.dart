@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:temparty/app/data/model/user_model.dart';
 import 'package:temparty/app/data/use_cases/user/get_user_data.dart';
 import 'package:temparty/app/data/use_cases/user/remove_profile_image.dart';
+import 'package:temparty/app/data/use_cases/user/update_organizer_account.dart';
 import 'package:temparty/app/data/use_cases/user/update_user_data.dart';
 import 'package:temparty/dir/dir.dart';
 
@@ -17,6 +18,7 @@ abstract class _EditControllerBase with Store {
   final getUserData = getIt.get<GetUserData>();
   final updateUserData = getIt.get<UpdateUserData>();
   final removeProfileImage = getIt.get<RemoveProfileImage>();
+  final updateOrganizerAccount = getIt.get<UpdateOrganizerAccount>();
 
   final ImagePicker picker = ImagePicker();
 
@@ -75,6 +77,13 @@ abstract class _EditControllerBase with Store {
   @action
   Future<void> deleteProfileImage() async {
     await removeProfileImage.removeProfileImage();
+    await updateAccount();
+    await refreshPage();
+  }
+
+  @action
+  Future<void> changeToEventOrganizer(bool? value) async {
+    await updateOrganizerAccount.updateOrganizerAccount(value);
     await updateAccount();
     await refreshPage();
   }

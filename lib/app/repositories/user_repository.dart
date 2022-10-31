@@ -44,4 +44,9 @@ class UserRepository {
     await _userRemote.removeUserProfileImage();
     await getUserData();
   }
+
+  Future<void> updateOrganizerAccount(bool? value) async {
+    await _userRemote.updateOrganizerAccount(value);
+    await getUserData();
+  }
 }

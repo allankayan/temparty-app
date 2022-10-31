@@ -10,17 +10,20 @@ class UserModel extends Equatable {
   String? address;
   String? profileImage;
   String? gender;
+  bool? isOrganizer;
 
-  UserModel(
-      {this.userUid,
-      this.username,
-      this.displayName,
-      this.email,
-      this.birthday,
-      this.bio,
-      this.address,
-      this.profileImage,
-      this.gender});
+  UserModel({
+    this.userUid,
+    this.username,
+    this.displayName,
+    this.email,
+    this.birthday,
+    this.bio,
+    this.address,
+    this.profileImage,
+    this.gender,
+    this.isOrganizer,
+  });
 
   UserModel.fromJson(Map<dynamic, dynamic>? json) {
     if (json == null) {
@@ -35,6 +38,7 @@ class UserModel extends Equatable {
     address = json['address'];
     profileImage = json['profileImage'];
     gender = json['gender'];
+    isOrganizer = json['isOrganizer'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +52,7 @@ class UserModel extends Equatable {
     data['address'] = address;
     data['profileImage'] = profileImage;
     data['gender'] = gender;
+    data['isOrganizer'] = isOrganizer;
     return data;
   }
 
@@ -61,6 +66,7 @@ class UserModel extends Equatable {
     String? address,
     String? profileImage,
     String? gender,
+    bool? isOrganizer,
   }) {
     return UserModel(
       userUid: userUid ?? this.userUid,
@@ -72,6 +78,7 @@ class UserModel extends Equatable {
       address: address ?? this.address,
       profileImage: profileImage ?? this.profileImage,
       gender: gender ?? this.gender,
+      isOrganizer: isOrganizer ?? this.isOrganizer,
     );
   }
 
@@ -85,5 +92,6 @@ class UserModel extends Equatable {
         address,
         profileImage,
         gender,
+        isOrganizer,
       ];
 }

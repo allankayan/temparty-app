@@ -48,4 +48,10 @@ class UserRemoteDataSource {
     await imageRef.delete();
     await ref.child(currentUser.uid).child('profileImage').remove();
   }
+
+  Future<void> updateOrganizerAccount(bool? value) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    await ref.child(currentUser!.uid).child('isOrganizer').set(value);
+  }
 }
