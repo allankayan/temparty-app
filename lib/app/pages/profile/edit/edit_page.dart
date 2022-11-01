@@ -151,6 +151,9 @@ class EditPageState extends State<EditPage> {
                                           child: TextFormField(
                                             controller: controller.name,
                                             keyboardType: TextInputType.text,
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(50),
+                                            ],
                                             decoration: const InputDecoration(
                                               prefixIcon: Icon(Icons.account_circle),
                                               border: OutlineInputBorder(
