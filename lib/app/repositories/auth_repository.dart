@@ -5,7 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:temparty/app/data/data_sources/user/user_local_data_source.dart';
 import 'package:temparty/app/repositories/user_repository.dart';
 
 @injectable
