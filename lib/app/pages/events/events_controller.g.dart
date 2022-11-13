@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_controller.dart';
+part of 'events_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'home_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$HomeController on HomeControllerBase, Store {
+mixin _$EventsController on _EventsControllerBase, Store {
   late final _$userAtom =
-      Atom(name: 'HomeControllerBase.user', context: context);
+      Atom(name: '_EventsControllerBase.user', context: context);
 
   @override
   ObservableFuture<UserModel> get user {
@@ -23,6 +23,14 @@ mixin _$HomeController on HomeControllerBase, Store {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
+  }
+
+  late final _$refreshPageAsyncAction =
+      AsyncAction('_EventsControllerBase.refreshPage', context: context);
+
+  @override
+  Future<void> refreshPage() {
+    return _$refreshPageAsyncAction.run(() => super.refreshPage());
   }
 
   @override

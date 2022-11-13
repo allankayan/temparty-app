@@ -1,19 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:temparty/app/pages/events/events_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:temparty/app/widgets/event_card_widget.dart';
+import 'package:temparty/app/widgets/gradient_button_widget.dart';
 import 'package:temparty/app/widgets/story_card_widget.dart';
-import 'home_controller.dart';
 
-class HomePage extends StatefulWidget {
+class EventsPage extends StatefulWidget {
   final String title;
-  const HomePage({Key? key, this.title = 'Home'}) : super(key: key);
+  const EventsPage({Key? key, this.title = 'EventsPage'}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  EventsPageState createState() => EventsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class EventsPageState extends State<EventsPage> {
   final covers = [
     const AssetImage('assets/images/teste2.jpg'),
     const AssetImage('assets/images/teste3.png'),
@@ -28,13 +29,7 @@ class _HomePageState extends State<HomePage> {
     null,
   ];
 
-  late final HomeController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = Modular.get<HomeController>();
-  }
+  final EventsController controller = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +69,64 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(10),
                               child: Column(
                                 children: [
+                                  (user.isOrganizer == true)
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(bottom: 10),
+                                          child: Container(
+                                            padding: const EdgeInsets.only(bottom: 20),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Colors.deepPurple,
+                                                  blurRadius: 0,
+                                                  spreadRadius: 0,
+                                                )
+                                              ],
+                                              border: Border.all(
+                                                  color: Colors.grey,
+                                                  strokeAlign: StrokeAlign.center),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 15, top: 10, bottom: 10),
+                                                  child: Text(
+                                                    'PARA ORGANIZADORES DE EVENTOS:',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.w800,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    GradientButtonWidget(
+                                                      text: 'Meus eventos',
+                                                      icon: Icons.celebration_rounded,
+                                                      onPressed: () {},
+                                                    ),
+                                                    GradientButtonWidget(
+                                                      text: 'Criar evento',
+                                                      icon: Icons.add_circle,
+                                                      onPressed: () async {
+                                                        await Modular.to
+                                                            .pushNamed('/events/create')
+                                                            .then((value) =>
+                                                                controller.refreshPage());
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
                                   const Padding(
                                     padding: EdgeInsets.all(10),
                                     child: Text(

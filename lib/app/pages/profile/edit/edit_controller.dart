@@ -1,5 +1,6 @@
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -42,7 +43,6 @@ abstract class _EditControllerBase with Store {
     final file = await picker.pickImage(source: ImageSource.gallery);
 
     if (file != null) image = file;
-    await updateAccount();
     await refreshPage();
   }
 
@@ -51,8 +51,6 @@ abstract class _EditControllerBase with Store {
     final file = await picker.pickImage(source: ImageSource.camera);
 
     if (file != null) image = file;
-
-    await updateAccount();
     await refreshPage();
   }
 
@@ -85,7 +83,7 @@ abstract class _EditControllerBase with Store {
   Future<void> changeToEventOrganizer(bool? value) async {
     await updateOrganizerAccount.updateOrganizerAccount(value);
     await updateAccount();
-    await refreshPage();
+    Modular.to.navigate('/');
   }
 
   @action
