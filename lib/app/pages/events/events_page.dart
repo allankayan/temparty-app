@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_card/image_card.dart';
+import 'package:intl/intl.dart';
 import 'package:temparty/app/pages/events/events_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:temparty/app/widgets/event_card_widget.dart';
 import 'package:temparty/app/widgets/gradient_button_widget.dart';
 import 'package:temparty/app/widgets/story_card_widget.dart';
 
@@ -15,20 +19,6 @@ class EventsPage extends StatefulWidget {
 }
 
 class EventsPageState extends State<EventsPage> {
-  final covers = [
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    const AssetImage('assets/images/teste.png'),
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    const AssetImage('assets/images/teste.png'),
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    null,
-  ];
-
   final EventsController controller = Modular.get();
 
   @override
@@ -78,7 +68,7 @@ class EventsPageState extends State<EventsPage> {
                                               borderRadius: BorderRadius.circular(10),
                                               boxShadow: const [
                                                 BoxShadow(
-                                                  color: Colors.deepPurple,
+                                                  color: Colors.deepPurpleAccent,
                                                   blurRadius: 0,
                                                   spreadRadius: 0,
                                                 )
@@ -116,8 +106,7 @@ class EventsPageState extends State<EventsPage> {
                                                       onPressed: () async {
                                                         await Modular.to
                                                             .pushNamed('/events/create')
-                                                            .then((value) =>
-                                                                controller.refreshPage());
+                                                            .then((value) => setState(() {}));
                                                       },
                                                     ),
                                                   ],
@@ -139,12 +128,21 @@ class EventsPageState extends State<EventsPage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 125,
-                                    child: ListView.builder(
-                                      itemCount: 6,
+                                    height: 150,
+                                    child: FirebaseAnimatedList(
+                                      query: FirebaseDatabase.instance
+                                          .ref()
+                                          .child('events')
+                                          .orderByChild('date'),
                                       scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return const StoryCardWidget();
+                                      itemBuilder: (context, DataSnapshot snapshot,
+                                          Animation<double> animation, int x) {
+                                        var event =
+                                            Map<String, dynamic>.from(snapshot.value as Map);
+                                        return StoryCardWidget(
+                                          image: event["profileImage"],
+                                          name: event["name"],
+                                        );
                                       },
                                     ),
                                   ),
@@ -156,9 +154,9 @@ class EventsPageState extends State<EventsPage> {
                                       const Align(
                                         alignment: Alignment.centerLeft,
                                         child: Padding(
-                                          padding: EdgeInsets.all(10),
+                                          padding: EdgeInsets.symmetric(vertical: 10),
                                           child: Text(
-                                            'Eventos em Barra Bonita - SP',
+                                            'Últimos eventos',
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black87,
@@ -168,16 +166,73 @@ class EventsPageState extends State<EventsPage> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: MediaQuery.of(context).size.height,
-                                        child: ListView.builder(
+                                        child: FirebaseAnimatedList(
+                                          shrinkWrap: true,
+                                          defaultChild: const SizedBox(
+                                            child: Center(
+                                              child: CircularProgressIndicator(),
+                                            ),
+                                          ),
+                                          query: FirebaseDatabase.instance.ref().child('events'),
                                           physics: const NeverScrollableScrollPhysics(),
-                                          padding: EdgeInsets.zero,
-                                          itemCount: 6,
                                           scrollDirection: Axis.vertical,
-                                          itemBuilder: (context, index) {
-                                            return EventCardWidget(
-                                              image: covers[index],
-                                            );
+                                          itemBuilder: (context, DataSnapshot snapshot,
+                                              Animation<double> animation, int x) {
+                                            var event =
+                                                Map<String, dynamic>.from(snapshot.value as Map);
+                                            if (event.isNotEmpty) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(bottom: 10),
+                                                child: InkWell(
+                                                  child: FillImageCard(
+                                                    color: Colors.deepPurpleAccent,
+                                                    heightImage: 140,
+                                                    width: MediaQuery.of(context).size.width,
+                                                    imageProvider: CachedNetworkImageProvider(
+                                                      event["headerImage"],
+                                                    ),
+                                                    title: Padding(
+                                                      padding: const EdgeInsets.only(left: 5.0),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          SizedBox(
+                                                            width:
+                                                                MediaQuery.of(context).size.width *
+                                                                    0.6,
+                                                            child: Text(
+                                                              event["name"],
+                                                              style: const TextStyle(
+                                                                color: Colors.white,
+                                                                fontWeight: FontWeight.bold,
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            event["date"],
+                                                            style: const TextStyle(
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    print('teste');
+                                                  },
+                                                ),
+                                              );
+                                            } else {
+                                              return const SizedBox(
+                                                child: Center(
+                                                  child: Text(
+                                                      'Não foi possível encontrar os eventos, verifique sua conexão'),
+                                                ),
+                                              );
+                                            }
                                           },
                                         ),
                                       ),

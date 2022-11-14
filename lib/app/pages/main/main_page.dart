@@ -25,7 +25,6 @@ class MainPageState extends State<MainPage> {
       controller: _controller,
       backgroundColor: Colors.deepPurple,
       navBarHeight: kBottomNavigationBarHeight + 20,
-      stateManagement: false,
       decoration: const NavBarDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(16),

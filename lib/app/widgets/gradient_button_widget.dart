@@ -33,7 +33,6 @@ class GradientButtonWidget extends StatelessWidget {
           icon: Icon(
             icon,
             size: 20.0,
-            color: Colors.white,
           ),
           style: ElevatedButton.styleFrom(
             elevation: 0,

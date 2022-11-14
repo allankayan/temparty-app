@@ -1,5 +1,6 @@
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
@@ -67,6 +68,8 @@ abstract class _CreateEventControllerBase with Store {
 
   @action
   Future<void> newEvent() async {
+    btnController.start();
+
     if (name.text != "" &&
         address.text != "" &&
         city.text != "" &&
@@ -84,6 +87,7 @@ abstract class _CreateEventControllerBase with Store {
         };
         await createEvent.createEvent(eventData, profileImage, headerImage);
         btnController.success();
+        Modular.to.pop();
       } on Exception catch (e) {
         btnController.error();
         Fluttertoast.showToast(
@@ -93,7 +97,8 @@ abstract class _CreateEventControllerBase with Store {
         );
       }
     } else {
-      Fluttertoast.showToast(
+      btnController.stop();
+      await Fluttertoast.showToast(
         msg: 'Todas informações precisam ser preenchidas.',
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.redAccent,
