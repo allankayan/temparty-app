@@ -67,24 +67,36 @@ abstract class _CreateEventControllerBase with Store {
 
   @action
   Future<void> newEvent() async {
-    try {
-      final eventData = {
-        "name": name.text,
-        "placeAddress": address.text,
-        "placeCity": city.text,
-        "placeZipcode": zipcode.text,
-        "observations": observations.text,
-        "date": date.text,
-        "organizerUid": user.value!.userUid!,
-      };
-      await createEvent.createEvent(eventData, profileImage, headerImage);
-      btnController.success();
-    } on Exception catch (e) {
-      btnController.error();
+    if (name.text != "" &&
+        address.text != "" &&
+        city.text != "" &&
+        zipcode.text != "" &&
+        date.text != "") {
+      try {
+        final eventData = {
+          "name": name.text,
+          "placeAddress": address.text,
+          "placeCity": city.text,
+          "placeZipcode": zipcode.text,
+          "observations": observations.text,
+          "date": date.text,
+          "organizerUid": user.value!.userUid!,
+        };
+        await createEvent.createEvent(eventData, profileImage, headerImage);
+        btnController.success();
+      } on Exception catch (e) {
+        btnController.error();
+        Fluttertoast.showToast(
+          msg: '$e',
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.deepPurple,
+        );
+      }
+    } else {
       Fluttertoast.showToast(
-        msg: '$e',
+        msg: 'Todas informações precisam ser preenchidas.',
         toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.redAccent,
       );
     }
   }
