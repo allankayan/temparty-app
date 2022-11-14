@@ -13,16 +13,6 @@ class TicketPage extends StatefulWidget {
 class TicketPageState extends State<TicketPage> {
   final TicketController store = Modular.get();
 
-  final covers = [
-    const AssetImage('assets/images/teste2.jpg'),
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,8 +47,8 @@ class TicketPageState extends State<TicketPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Column(
-                          children: [
-                            const Padding(
+                          children: const [
+                            Padding(
                               padding: EdgeInsets.all(10),
                               child: Text(
                                 'MEUS CONVITES',
@@ -67,19 +57,6 @@ class TicketPageState extends State<TicketPage> {
                                   color: Colors.deepPurple,
                                   fontWeight: FontWeight.w800,
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 6,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (context, index) {
-                                  return EventCardWidget(
-                                    image: covers[index],
-                                  );
-                                },
                               ),
                             ),
                           ],

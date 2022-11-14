@@ -15,20 +15,6 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   final ProfileController controller = Modular.get();
 
-  final covers = [
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    const AssetImage('assets/images/teste.png'),
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    const AssetImage('assets/images/teste.png'),
-    const AssetImage('assets/images/teste2.jpg'),
-    const AssetImage('assets/images/teste3.png'),
-    null,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,20 +145,6 @@ class ProfilePageState extends State<ProfilePage> {
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height,
-                                    child: ListView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.zero,
-                                      itemCount: 6,
-                                      scrollDirection: Axis.vertical,
-                                      itemBuilder: (context, index) {
-                                        return EventCardWidget(
-                                          image: covers[index],
-                                        );
-                                      },
                                     ),
                                   ),
                                 ],
