@@ -66,6 +66,7 @@ dependencies:
   image_card: ^0.0.4
   intl: ^0.17.0
   simple_gradient_text: ^1.2.4
+  draggable_home: ^1.0.4
 
 dev_dependencies:
   flutter_test:

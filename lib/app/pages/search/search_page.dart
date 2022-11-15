@@ -1,8 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:temparty/app/pages/search/search_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:temparty/app/widgets/event_card_widget.dart';
 
 class SearchPage extends StatefulWidget {
   final String title;
