@@ -87,6 +87,7 @@ class UserModel extends Equatable {
         userUid,
         username,
         displayName,
+        email,
         birthday,
         bio,
         address,

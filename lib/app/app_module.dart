@@ -1,5 +1,6 @@
 import 'package:temparty/app/pages/auth/login/login_module.dart';
 import 'package:temparty/app/pages/auth/register/register_module.dart';
+import 'package:temparty/app/pages/events/events_module.dart';
 import 'package:temparty/app/pages/main/main_controller.dart';
 import 'package:temparty/app/pages/main/main_module.dart';
 import 'package:temparty/app/pages/profile/profile_module.dart';
@@ -7,8 +8,6 @@ import 'package:temparty/app/pages/search/search_module.dart';
 import 'package:temparty/app/pages/splash/splash_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:temparty/app/pages/ticket/ticket_module.dart';
-
-import 'pages/home/home_module.dart';
 
 class AppModule extends Module {
   @override
@@ -20,11 +19,11 @@ class AppModule extends Module {
   final List<ModularRoute> routes = [
     ModuleRoute('/', module: SplashModule()),
     ModuleRoute('/main', module: MainModule()),
-    ModuleRoute('/home', module: HomeModule()),
     ModuleRoute('/login', module: LoginModule()),
     ModuleRoute('/register', module: RegisterModule()),
     ModuleRoute('/search', module: SearchModule()),
     ModuleRoute('/ticket', module: TicketModule()),
     ModuleRoute('/profile', module: ProfileModule()),
+    ModuleRoute('/events', module: EventsModule()),
   ];
 }

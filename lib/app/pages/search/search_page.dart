@@ -1,8 +1,8 @@
+import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:searchbar_animation/searchbar_animation.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:temparty/app/pages/search/search_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:temparty/app/widgets/event_card_widget.dart';
 
 class SearchPage extends StatefulWidget {
   final String title;
@@ -16,95 +16,59 @@ class SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final covers = [
-      const AssetImage('assets/images/teste2.jpg'),
-      const AssetImage('assets/images/teste3.png'),
-      const AssetImage('assets/images/teste.png'),
-      null,
-      null,
-      null,
-    ];
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.png"),
-            fit: BoxFit.cover,
+    return DraggableHome(
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: GradientText(
+          'Temparty',
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.deepPurple,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 2,
+          ),
+          colors: const [
+            Colors.purpleAccent,
+            Colors.deepPurpleAccent,
+          ],
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.deepPurpleAccent,
+            ),
           ),
         ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 20),
-                child: Image(
-                  width: 140,
-                  image: AssetImage('assets/images/temparty.png'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(15),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'PROCURAR EVENTOS',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.deepPurple,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                            SearchBarAnimation(
-                              isOriginalAnimation: true,
-                              isSearchBoxOnRightSide: true,
-                              hintText: 'Nome do evento',
-                              textEditingController: controller.search,
-                              buttonColour: Colors.deepPurple,
-                              buttonWidget: const Icon(Icons.search),
-                              secondaryButtonWidget: const Icon(Icons.search),
-                              trailingWidget: const Icon(Icons.search),
-                              onFieldSubmitted: () {
-                                setState(() {
-                                  controller.search.clear();
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 6,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (context, index) {
-                                  return EventCardWidget(
-                                    image: covers[index],
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+      ],
+      centerTitle: false,
+      curvedBodyRadius: 8,
+      headerExpandedHeight: 0.20,
+      fullyStretchable: false,
+      backgroundColor: Colors.white,
+      appBarColor: Colors.white,
+      headerWidget: headerWidget(context),
+      body: [],
+    );
+  }
+
+  Widget headerWidget(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/background.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: const Center(
+        child: Image(
+          width: 140,
+          image: AssetImage('assets/images/temparty.png'),
+          fit: BoxFit.contain,
         ),
       ),
     );

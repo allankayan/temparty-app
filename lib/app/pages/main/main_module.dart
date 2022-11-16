@@ -1,4 +1,4 @@
-import 'package:temparty/app/pages/home/home_controller.dart';
+import 'package:temparty/app/pages/events/events_controller.dart';
 import 'package:temparty/app/pages/main/main_page.dart';
 import 'package:temparty/app/pages/main/main_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,7 +10,7 @@ class MainModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => MainController()),
-    Bind.lazySingleton((i) => HomeController()),
+    Bind.lazySingleton((i) => EventsController()),
     Bind.lazySingleton((i) => SearchController()),
     Bind.lazySingleton((i) => TicketController()),
     Bind.lazySingleton((i) => ProfileController()),

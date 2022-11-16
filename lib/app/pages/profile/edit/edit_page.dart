@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -92,27 +94,42 @@ class EditPageState extends State<EditPage> {
                                               children: [
                                                 ClipOval(
                                                   child: Material(
-                                                      color: Colors.transparent,
-                                                      child: user.profileImage == null
-                                                          ? InkWell(
-                                                              child: SizedBox(
-                                                                width: 128,
-                                                                height: 128,
-                                                                child: Image.asset(
-                                                                  'assets/images/avatar.jpg',
-                                                                  fit: BoxFit.cover,
+                                                    color: Colors.transparent,
+                                                    child: controller.image == null
+                                                        ? user.profileImage == null
+                                                            ? InkWell(
+                                                                child: SizedBox(
+                                                                  width: 128,
+                                                                  height: 128,
+                                                                  child: Image.asset(
+                                                                    'assets/images/avatar.jpg',
+                                                                    fit: BoxFit.cover,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            )
-                                                          : InkWell(
-                                                              child: FadeInImage.memoryNetwork(
-                                                                placeholder: kTransparentImage,
-                                                                image: user.profileImage!,
+                                                              )
+                                                            : InkWell(
+                                                                child: FadeInImage.memoryNetwork(
+                                                                  placeholder: kTransparentImage,
+                                                                  image: user.profileImage!,
+                                                                  fit: BoxFit.cover,
+                                                                  width: 128,
+                                                                  height: 128,
+                                                                ),
+                                                              )
+                                                        : ClipOval(
+                                                            child: SizedBox(
+                                                              width: 128,
+                                                              height: 128,
+                                                              child: Image.file(
+                                                                File(controller.image!.path),
                                                                 fit: BoxFit.cover,
-                                                                width: 128,
-                                                                height: 128,
+                                                                width: MediaQuery.of(context)
+                                                                    .size
+                                                                    .width,
                                                               ),
-                                                            )),
+                                                            ),
+                                                          ),
+                                                  ),
                                                 ),
                                                 Positioned(
                                                   bottom: 0,
@@ -306,7 +323,8 @@ class EditPageState extends State<EditPage> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () async {
-                        controller.imageFromCamera();
+                        await controller.imageFromCamera().then((value) => setState(() {}));
+
                         Modular.to.pop();
                       },
                       label: const Text("Abrir câmera"),
@@ -318,7 +336,8 @@ class EditPageState extends State<EditPage> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () async {
-                        controller.imageFromGallery();
+                        await controller.imageFromGallery().then((value) => setState(() {}));
+
                         Modular.to.pop();
                       },
                       label: const Text("Escolher foto existente"),
@@ -331,7 +350,9 @@ class EditPageState extends State<EditPage> {
                     (controller.user.value?.profileImage != null)
                         ? ElevatedButton.icon(
                             onPressed: () async {
-                              await controller.deleteProfileImage();
+                              await controller
+                                  .deleteProfileImage()
+                                  .then((value) => setState(() {}));
                               Modular.to.pop();
                             },
                             style: ElevatedButton.styleFrom(

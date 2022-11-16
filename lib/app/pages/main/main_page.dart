@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:temparty/app/pages/home/home_page.dart';
+import 'package:temparty/app/pages/events/events_page.dart';
 import 'package:temparty/app/pages/main/main_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:temparty/app/pages/profile/profile_page.dart';
 import 'package:temparty/app/pages/search/search_page.dart';
 import 'package:temparty/app/pages/ticket/ticket_page.dart';
@@ -15,8 +15,8 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-  final MainController store = Modular.get();
-  final PersistentTabController _controller = PersistentTabController(initialIndex: 0);
+  final MainController controller = Modular.get();
+  final _controller = PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class MainPageState extends State<MainPage> {
 
 List<Widget> _buildScreens() {
   return [
-    const HomePage(),
+    const EventsPage(),
     const SearchPage(),
     const TicketPage(),
     const ProfilePage(),
@@ -49,8 +49,8 @@ List<Widget> _buildScreens() {
 List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
-      title: 'Principal',
-      icon: const Icon(Icons.home_rounded),
+      title: 'Eventos',
+      icon: const Icon(Icons.explore),
       activeColorPrimary: Colors.white,
       inactiveColorPrimary: Colors.white.withOpacity(0.70),
     ),
