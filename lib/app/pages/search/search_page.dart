@@ -52,7 +52,9 @@ class SearchPageState extends State<SearchPage> {
       backgroundColor: Colors.white,
       appBarColor: Colors.white,
       headerWidget: headerWidget(context),
-      body: [],
+      body: [
+        searchTextField(context),
+      ],
     );
   }
 
@@ -69,6 +71,47 @@ class SearchPageState extends State<SearchPage> {
           width: 140,
           image: AssetImage('assets/images/temparty.png'),
           fit: BoxFit.contain,
+        ),
+      ),
+    );
+  }
+
+  Widget searchTextField(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        height: 50,
+        child: TextField(
+          controller: controller.search,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(width: 0, style: BorderStyle.none),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ),
+            hintText: 'Pesquise o nome do evento',
+            hintStyle: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+              fontSize: 14,
+            ),
+            labelStyle: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+              fontSize: 14,
+            ),
+            prefixIcon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            hoverColor: Colors.white,
+            fillColor: Colors.deepPurpleAccent,
+            filled: true,
+            focusColor: Colors.white,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+          ),
         ),
       ),
     );
