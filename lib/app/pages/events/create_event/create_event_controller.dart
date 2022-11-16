@@ -70,36 +70,44 @@ abstract class _CreateEventControllerBase with Store {
   Future<void> newEvent() async {
     btnController.start();
 
-    if (name.text != "" &&
-        address.text != "" &&
-        city.text != "" &&
-        zipcode.text != "" &&
-        date.text != "") {
-      try {
-        final eventData = {
-          "name": name.text,
-          "placeAddress": address.text,
-          "placeCity": city.text,
-          "placeZipcode": zipcode.text,
-          "observations": observations.text,
-          "date": date.text,
-          "organizerUid": user.value!.userUid!,
-        };
-        await createEvent.createEvent(eventData, profileImage, headerImage);
-        btnController.success();
-        Modular.to.pop();
-      } on Exception catch (e) {
-        btnController.error();
-        Fluttertoast.showToast(
-          msg: '$e',
+    if (profileImage != null && headerImage != null) {
+      if (name.text != "" &&
+          address.text != "" &&
+          city.text != "" &&
+          zipcode.text != "" &&
+          date.text != "") {
+        try {
+          final eventData = {
+            "name": name.text,
+            "placeAddress": address.text,
+            "placeCity": city.text,
+            "placeZipcode": zipcode.text,
+            "observations": observations.text,
+            "date": date.text,
+            "organizerUid": user.value!.userUid!,
+          };
+          await createEvent.createEvent(eventData, profileImage, headerImage);
+          btnController.success();
+        } on Exception catch (e) {
+          btnController.error();
+          Fluttertoast.showToast(
+            msg: '$e',
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.deepPurple,
+          );
+        }
+      } else {
+        btnController.stop();
+        await Fluttertoast.showToast(
+          msg: 'Preencha todas informações do evento',
           toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.redAccent,
         );
       }
     } else {
       btnController.stop();
       await Fluttertoast.showToast(
-        msg: 'Todas informações precisam ser preenchidas.',
+        msg: 'A foto e a capa do evento são obrigatórias. Você poderá mudar depois.',
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.redAccent,
       );

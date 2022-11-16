@@ -67,6 +67,7 @@ dependencies:
   intl: ^0.17.0
   simple_gradient_text: ^1.2.4
   draggable_home: ^1.0.4
+  card_loading: ^0.2.2
 
 dev_dependencies:
   flutter_test:

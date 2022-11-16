@@ -102,6 +102,16 @@ class ProfilePageState extends State<ProfilePage> {
                                           : FadeInImage.memoryNetwork(
                                               placeholder: kTransparentImage,
                                               image: user.profileImage!,
+                                              imageErrorBuilder: (context, error, stackTrace) {
+                                                return SizedBox(
+                                                  width: 128,
+                                                  height: 128,
+                                                  child: Image.asset(
+                                                    'assets/images/avatar.jpg',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                );
+                                              },
                                               fit: BoxFit.cover,
                                               width: 128,
                                               height: 128,

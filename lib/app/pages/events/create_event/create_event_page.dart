@@ -56,12 +56,16 @@ class CreateEventPageState extends State<CreateEventPage> {
                                             File(controller.headerImage!.path),
                                             fit: BoxFit.cover,
                                             width: MediaQuery.of(context).size.width,
+                                            height: 180,
                                           ),
                                         )
-                                      : const CacheImage(
-                                          path:
-                                              'https://servocarmecanica.com.br/wp-content/themes/primeweb/images/skins/headers/boxed/header-purpleHaze.jpg',
-                                          fit: BoxFit.fill,
+                                      : ClipRRect(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          child: Image.asset(
+                                            'assets/images/eventHeader.jpg',
+                                            fit: BoxFit.cover,
+                                            height: 180,
+                                          ),
                                         ),
                                   Center(
                                     child: Container(
@@ -152,6 +156,9 @@ class CreateEventPageState extends State<CreateEventPage> {
                           child: TextFormField(
                             controller: controller.name,
                             keyboardType: TextInputType.text,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(50),
+                            ],
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.celebration),
                               border: OutlineInputBorder(

@@ -4,8 +4,9 @@ import 'package:transparent_image/transparent_image.dart';
 class StoryCardWidget extends StatelessWidget {
   final String? image;
   final String? name;
+  final Function? onTap;
 
-  const StoryCardWidget({super.key, this.image, this.name});
+  const StoryCardWidget({super.key, this.image, this.name, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,9 @@ class StoryCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              onTap!();
+            },
           ),
         ),
         Flexible(

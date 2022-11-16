@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_loading/card_loading.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -126,12 +127,16 @@ class EventsPageState extends State<EventsPage> {
             height: 150,
             child: FirebaseAnimatedList(
               query: FirebaseDatabase.instance.ref().child('events').orderByChild('date'),
+              defaultChild: loadingCards(context, true),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, DataSnapshot snapshot, Animation<double> animation, int x) {
                 var event = Map<String, dynamic>.from(snapshot.value as Map);
                 return StoryCardWidget(
                   image: event["profileImage"],
                   name: event["name"],
+                  onTap: () {
+                    Modular.to.pushNamed("/events/event/", arguments: event["eventUid"]);
+                  },
                 );
               },
             ),
@@ -163,11 +168,7 @@ class EventsPageState extends State<EventsPage> {
           ),
           FirebaseAnimatedList(
             shrinkWrap: true,
-            defaultChild: const SizedBox(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+            defaultChild: loadingCards(context, false),
             query: FirebaseDatabase.instance.ref().child('events'),
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
@@ -211,7 +212,7 @@ class EventsPageState extends State<EventsPage> {
                       ),
                     ),
                     onTap: () {
-                      print('teste');
+                      Modular.to.pushNamed("/events/event/", arguments: event["eventUid"]);
                     },
                   ),
                 );
@@ -265,11 +266,15 @@ class EventsPageState extends State<EventsPage> {
                 GradientButtonWidget(
                   text: 'Meus eventos',
                   icon: Icons.celebration_rounded,
+                  left: Colors.orangeAccent,
+                  right: Colors.pink,
                   onPressed: () {},
                 ),
                 GradientButtonWidget(
                   text: 'Criar evento',
                   icon: Icons.add_circle,
+                  left: Colors.orangeAccent,
+                  right: Colors.pink,
                   onPressed: () async {
                     await Modular.to.pushNamed('/events/create').then((value) => setState(() {}));
                   },
@@ -280,5 +285,50 @@ class EventsPageState extends State<EventsPage> {
         ),
       ),
     );
+  }
+
+  Widget loadingCards(BuildContext context, bool isStoryCard) {
+    double width = 0.0;
+    double height = 0.0;
+
+    if (isStoryCard) {
+      width = 80.0;
+      height = 125.0;
+
+      return SizedBox(
+        child: ListView.builder(
+          itemCount: 10,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return CardLoading(
+              height: height,
+              width: width,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              margin: const EdgeInsets.only(bottom: 10, right: 10),
+            );
+          },
+        ),
+      );
+    } else {
+      width = MediaQuery.of(context).size.width;
+      height = 100.0;
+
+      return SizedBox(
+        height: 450,
+        child: ListView.builder(
+          itemCount: 4,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index) {
+            return CardLoading(
+              height: height,
+              width: width,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              margin: const EdgeInsets.only(bottom: 10),
+            );
+          },
+        ),
+      );
+    }
   }
 }

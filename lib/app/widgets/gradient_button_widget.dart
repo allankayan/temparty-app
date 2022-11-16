@@ -4,12 +4,16 @@ class GradientButtonWidget extends StatelessWidget {
   final Function() onPressed;
   final String text;
   final IconData icon;
+  final Color left;
+  final Color right;
 
   const GradientButtonWidget({
     super.key,
     required this.text,
     required this.icon,
     required this.onPressed,
+    required this.left,
+    required this.right,
   });
 
   @override
@@ -25,7 +29,10 @@ class GradientButtonWidget extends StatelessWidget {
             )
           ],
           borderRadius: BorderRadius.circular(20),
-          gradient: const LinearGradient(colors: [Colors.orangeAccent, Colors.pink])),
+          gradient: LinearGradient(colors: [
+            left,
+            right,
+          ])),
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0, left: 8.0),
         child: ElevatedButton.icon(

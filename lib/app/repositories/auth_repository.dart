@@ -60,8 +60,6 @@ class AuthRepository {
 
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
-    await _deleteCacheDir();
-    await _deleteAppDir();
     Modular.to.pushNamedAndRemoveUntil('/', (p0) => false);
   }
 

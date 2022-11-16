@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:temparty/app/data/model/event_model.dart';
 import 'package:injectable/injectable.dart';
@@ -13,10 +12,10 @@ import 'package:uuid/uuid.dart';
 class EventRemoteDataSource {
   final DatabaseReference ref = FirebaseDatabase.instance.ref().child("events");
   final Reference storage = FirebaseStorage.instance.ref().child("events");
-  var uuid = Uuid();
+  var uuid = const Uuid();
 
-  Future<EventModel?> getEventByUid(String? eventUid) async {
-    final snapshot = await ref.child(eventUid!).get();
+  Future<EventModel> getEventByUid(String eventUid) async {
+    final snapshot = await ref.child(eventUid).get();
     final data = snapshot.value as Map<dynamic, dynamic>;
 
     return EventModel.fromJson(data);
