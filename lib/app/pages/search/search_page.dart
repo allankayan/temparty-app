@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:draggable_home/draggable_home.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_card/image_card.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:temparty/app/pages/search/search_controller.dart';
 import 'package:flutter/material.dart';
@@ -18,42 +21,18 @@ class SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return DraggableHome(
       title: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: GradientText(
-          'Temparty',
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.deepPurple,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 2,
-          ),
-          colors: const [
-            Colors.purpleAccent,
-            Colors.deepPurpleAccent,
-          ],
-        ),
+        padding: const EdgeInsets.only(top: 16.0),
+        child: searchTextField(context),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.deepPurpleAccent,
-            ),
-          ),
-        ),
-      ],
       centerTitle: false,
       curvedBodyRadius: 8,
-      headerExpandedHeight: 0.20,
+      headerExpandedHeight: 0.30,
       fullyStretchable: false,
       backgroundColor: Colors.white,
       appBarColor: Colors.white,
       headerWidget: headerWidget(context),
       body: [
-        searchTextField(context),
+        listEvents(context),
       ],
     );
   }
@@ -66,11 +45,21 @@ class SearchPageState extends State<SearchPage> {
           fit: BoxFit.cover,
         ),
       ),
-      child: const Center(
-        child: Image(
-          width: 140,
-          image: AssetImage('assets/images/temparty.png'),
-          fit: BoxFit.contain,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Image(
+                width: 140,
+                image: AssetImage('assets/images/temparty.png'),
+                fit: BoxFit.contain,
+              ),
+            ),
+            searchTextField(context),
+          ],
         ),
       ),
     );
@@ -80,12 +69,15 @@ class SearchPageState extends State<SearchPage> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
-        height: 50,
+        height: 60,
         child: TextField(
           controller: controller.search,
           style: const TextStyle(
             color: Colors.white,
           ),
+          onChanged: (value) async {
+            await controller.searchByEventName(value);
+          },
           decoration: InputDecoration(
             border: const OutlineInputBorder(
               borderSide: BorderSide(width: 0, style: BorderStyle.none),
@@ -113,6 +105,70 @@ class SearchPageState extends State<SearchPage> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget listEvents(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Observer(
+        builder: (context) {
+          final events = controller.filteredEvents.toList();
+          if (events.isNotEmpty) {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: events.length,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: FillImageCard(
+                      color: Colors.deepPurpleAccent,
+                      heightImage: 140,
+                      width: MediaQuery.of(context).size.width,
+                      imageProvider: CachedNetworkImageProvider(
+                        events[index].headerImage!,
+                      ),
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Text(
+                                events[index].name!,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              events[index].date!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Modular.to.pushNamed("/events/event/", arguments: events[index].eventUid);
+                  },
+                );
+              },
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
       ),
     );
   }

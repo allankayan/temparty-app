@@ -14,6 +14,18 @@ class EventRemoteDataSource {
   final Reference storage = FirebaseStorage.instance.ref().child("events");
   var uuid = const Uuid();
 
+  Future<List<EventModel>> getEventList() async {
+    final snapshot = await ref.get();
+    final data = snapshot.value as Map?;
+    var eventList = <EventModel>[];
+
+    data!.forEach((key, value) {
+      eventList.add(EventModel.fromJson(value));
+    });
+
+    return eventList;
+  }
+
   Future<EventModel> getEventByUid(String eventUid) async {
     final snapshot = await ref.child(eventUid).get();
     final data = snapshot.value as Map<dynamic, dynamic>;

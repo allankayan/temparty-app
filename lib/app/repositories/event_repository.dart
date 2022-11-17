@@ -12,6 +12,10 @@ class EventRepository {
 
   EventRepository(this._eventRemote);
 
+  Future<List<EventModel>> getEventList() async {
+    return await _eventRemote.getEventList();
+  }
+
   Future<EventModel> getEventByUid(String? eventUid) async {
     return await _eventRemote.getEventByUid(eventUid!);
   }
