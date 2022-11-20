@@ -6,11 +6,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:temparty/app/pages/events/create_event/create_event_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:temparty/app/widgets/cache_image.dart';
+import 'package:temparty/app/widgets/custom_app_bar.dart';
 
 class CreateEventPage extends StatefulWidget {
   final String title;
   const CreateEventPage({Key? key, this.title = 'CreateEventPage'}) : super(key: key);
+  
   @override
   CreateEventPageState createState() => CreateEventPageState();
 }
@@ -21,15 +22,7 @@ class CreateEventPageState extends State<CreateEventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Novo evento",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
-          ),
-        ),
-      ),
+      appBar: const CustomAppBar(title: 'Novo evento'),
       resizeToAvoidBottomInset: true,
       body: Observer(
         builder: (context) {
@@ -263,7 +256,6 @@ class CreateEventPageState extends State<CreateEventPage> {
                             successColor: Colors.deepPurpleAccent,
                             resetAfterDuration: true,
                             duration: const Duration(seconds: 2),
-                            animateOnTap: false,
                             onPressed: () async {
                               await controller.newEvent();
                             },
