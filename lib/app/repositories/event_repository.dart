@@ -16,8 +16,12 @@ class EventRepository {
     return await _eventRemote.getEventList();
   }
 
-  Future<EventModel> getEventByUid(String? eventUid) async {
-    return await _eventRemote.getEventByUid(eventUid!);
+  Future<EventModel> getEventByUid(String eventUid) async {
+    return await _eventRemote.getEventByUid(eventUid);
+  }
+
+  Future<List<EventModel>> getEventsByOrganizerUid(String organizerUid) async {
+    return await _eventRemote.getEventsByOrganizerUid(organizerUid);
   }
 
   Future<void> createEvent(

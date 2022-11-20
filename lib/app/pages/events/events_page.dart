@@ -268,15 +268,18 @@ class EventsPageState extends State<EventsPage> {
                   icon: Icons.celebration_rounded,
                   left: Colors.orangeAccent,
                   right: Colors.pink,
-                  onPressed: () {},
+                  onPressed: () {
+                    Modular.to
+                        .pushNamed("/events/my_events", arguments: controller.user.value!.userUid);
+                  },
                 ),
                 GradientButtonWidget(
                   text: 'Criar evento',
                   icon: Icons.add_circle,
                   left: Colors.orangeAccent,
                   right: Colors.pink,
-                  onPressed: () async {
-                    await Modular.to.pushNamed('/events/create').then((value) => setState(() {}));
+                  onPressed: () {
+                    Modular.to.pushNamed('/events/create').then((value) => setState(() {}));
                   },
                 ),
               ],

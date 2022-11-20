@@ -54,10 +54,10 @@ class EventPageState extends State<EventPage> {
                 ),
                 icon: const Icon(
                   Icons.arrow_back_rounded,
-                  color: Colors.purple,
+                  color: Colors.purpleAccent,
                 ),
                 onPressed: () {
-                  Modular.to.pop();
+                  Modular.to.popUntil(ModalRoute.withName('/events/my_events'));
                 },
               ),
             ),
@@ -244,7 +244,7 @@ class EventPageState extends State<EventPage> {
                 ),
               ),
               onTap: () {
-                Modular.to.pop();
+                Modular.to.popUntil(ModalRoute.withName('/events/my_events'));
               },
             ),
           ),

@@ -33,6 +33,18 @@ class EventRemoteDataSource {
     return EventModel.fromJson(data);
   }
 
+  Future<List<EventModel>> getEventsByOrganizerUid(String organizerUid) async {
+    final snapshot = await ref.orderByChild("organizerUid").equalTo(organizerUid).get();
+    final data = snapshot.value as Map?;
+    var eventList = <EventModel>[];
+
+    data!.forEach((key, value) {
+      eventList.add(EventModel.fromJson(value));
+    });
+
+    return eventList;
+  }
+
   Future<void> createEvent(EventModel? event, XFile? profileImage, XFile? headerImage) async {
     event!.eventUid = uuid.v4();
 
