@@ -28,4 +28,9 @@ class EventRepository {
     await _eventRemote.createEvent(event, profileImage, headerImage);
     Modular.to.popAndPushNamed('/events/event/', arguments: event.eventUid);
   }
+
+  Future<void> updateEvent(
+      Map<String, String> data, XFile? profileImage, XFile? headerImage) async {
+    await _eventRemote.updateEvent(data, profileImage, headerImage);
+  }
 }

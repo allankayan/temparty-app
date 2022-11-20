@@ -41,6 +41,14 @@ mixin _$EventController on _EventControllerBase, Store {
     });
   }
 
+  late final _$refreshPageAsyncAction =
+      AsyncAction('_EventControllerBase.refreshPage', context: context);
+
+  @override
+  Future<void> refreshPage() {
+    return _$refreshPageAsyncAction.run(() => super.refreshPage());
+  }
+
   @override
   String toString() {
     return '''

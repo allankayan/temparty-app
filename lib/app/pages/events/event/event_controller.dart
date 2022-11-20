@@ -22,4 +22,9 @@ abstract class _EventControllerBase with Store {
 
   @observable
   late ObservableFuture<UserModel> user = getUserData.getUserData().asObservable();
+
+  @action
+  Future<void> refreshPage() async {
+    event = event = _getEvent.getEventByUid(eventUid: uid).asObservable();
+  }
 }

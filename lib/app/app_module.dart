@@ -1,5 +1,6 @@
 import 'package:temparty/app/pages/auth/login/login_module.dart';
 import 'package:temparty/app/pages/auth/register/register_module.dart';
+import 'package:temparty/app/pages/events/event/event_module.dart';
 import 'package:temparty/app/pages/events/events_module.dart';
 import 'package:temparty/app/pages/main/main_controller.dart';
 import 'package:temparty/app/pages/main/main_module.dart';
@@ -25,5 +26,6 @@ class AppModule extends Module {
     ModuleRoute('/ticket', module: TicketModule()),
     ModuleRoute('/profile', module: ProfileModule()),
     ModuleRoute('/events', module: EventsModule()),
+    ModuleRoute('/event', module: EventModule()),
   ];
 }

@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:temparty/app/data/model/event_model.dart';
-import 'package:temparty/app/data/model/user_model.dart';
 import 'package:temparty/app/pages/events/event/event_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:temparty/app/widgets/cache_image.dart';
@@ -267,7 +264,11 @@ class EventPageState extends State<EventPage> {
                         size: 22,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Modular.to
+                          .pushNamed("/event/edit/", arguments: widget.uid)
+                          .then((value) => controller.refreshPage());
+                    },
                   ),
                 ),
               )

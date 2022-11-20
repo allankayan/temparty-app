@@ -56,4 +56,29 @@ class EventRemoteDataSource {
 
     await ref.child(event.eventUid!).set(event.toJson());
   }
+
+  Future<void> updateEvent(
+      Map<String, String> data, XFile? profileImage, XFile? headerImage) async {
+    EventModel event = EventModel.fromJson(data);
+
+    if (profileImage != null) {
+      final profileImageRef = storage.child(event.eventUid!).child("profileImage.jpg");
+      final selectedImage = File(profileImage.path);
+
+      await profileImageRef.putFile(selectedImage);
+      final url = await profileImageRef.getDownloadURL();
+      data.update('profileImage', (value) => url, ifAbsent: () => url);
+    }
+
+    if (headerImage != null) {
+      final headerImageRef = storage.child(event.eventUid!).child("headerImage.jpg");
+      final selectedImage = File(headerImage.path);
+
+      await headerImageRef.putFile(selectedImage);
+      final url = await headerImageRef.getDownloadURL();
+      data.update('headerImage', (value) => url, ifAbsent: () => url);
+    }
+
+    await ref.child(event.eventUid!).update(data);
+  }
 }
