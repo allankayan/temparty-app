@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
@@ -24,7 +25,9 @@ abstract class _SearchControllerBase with Store {
 
     filteredEvents = events
         .where((element) =>
-            element.name != null && element.name!.toLowerCase().contains(name.toLowerCase()))
+            element.name != null &&
+            removeDiacritics(element.name!.toLowerCase())
+                .contains(removeDiacritics(name.toLowerCase())))
         .toList()
         .asObservable();
   }
