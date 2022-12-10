@@ -23,12 +23,16 @@ abstract class _SearchControllerBase with Store {
   Future<void> searchByEventName(String name) async {
     final events = await getEventList.getEventList();
 
-    filteredEvents = events
-        .where((element) =>
-            element.name != null &&
-            removeDiacritics(element.name!.toLowerCase())
-                .contains(removeDiacritics(name.toLowerCase())))
-        .toList()
-        .asObservable();
+    if (name.isNotEmpty) {
+      filteredEvents = events
+          .where((element) =>
+              element.name != null &&
+              removeDiacritics(element.name!.toLowerCase())
+                  .contains(removeDiacritics(name.toLowerCase())))
+          .toList()
+          .asObservable();
+    } else {
+      filteredEvents = ObservableList<EventModel>();
+    }
   }
 }
