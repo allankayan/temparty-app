@@ -60,16 +60,20 @@ class EventPageState extends ModularState<EventPage, EventController> {
                 },
               ),
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GradientButtonWidget(
-                icon: Icons.qr_code_rounded,
-                text: "Comprar ingresso",
-                left: Colors.purpleAccent,
-                right: Colors.deepPurpleAccent,
-                onPressed: () {},
-              ),
-            ),
+            bottomNavigationBar: event.organizerUid != user.userUid
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GradientButtonWidget(
+                      icon: Icons.qr_code_rounded,
+                      text: "Comprar ingresso",
+                      left: Colors.purpleAccent,
+                      right: Colors.deepPurpleAccent,
+                      onPressed: () async {
+                        await controller.newTicket();
+                      },
+                    ),
+                  )
+                : null,
             curvedBodyRadius: 12,
             headerExpandedHeight: 0.15,
             headerBottomBar: bottomHeaderWidget(context, _isOwnEvent),

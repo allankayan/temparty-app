@@ -11,26 +11,31 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../app/data/data_sources/event/event_remote_data_source.dart' as _i3;
-import '../app/data/data_sources/user/user_local_data_source.dart' as _i11;
-import '../app/data/data_sources/user/user_remote_data_source.dart' as _i12;
-import '../app/data/use_cases/auth/login.dart' as _i17;
-import '../app/data/use_cases/auth/logout.dart' as _i18;
-import '../app/data/use_cases/auth/register.dart' as _i19;
-import '../app/data/use_cases/event/create_event.dart' as _i15;
+import '../app/data/data_sources/ticket/ticket_local_data_source.dart' as _i10;
+import '../app/data/data_sources/ticket/ticket_remote_data_source.dart' as _i11;
+import '../app/data/data_sources/user/user_local_data_source.dart' as _i14;
+import '../app/data/data_sources/user/user_remote_data_source.dart' as _i15;
+import '../app/data/use_cases/auth/login.dart' as _i22;
+import '../app/data/use_cases/auth/logout.dart' as _i23;
+import '../app/data/use_cases/auth/register.dart' as _i24;
+import '../app/data/use_cases/event/create_event.dart' as _i18;
 import '../app/data/use_cases/event/get_event_by_uid.dart' as _i7;
 import '../app/data/use_cases/event/get_event_list.dart' as _i8;
 import '../app/data/use_cases/event/get_events_by_organizer_uid.dart' as _i9;
-import '../app/data/use_cases/event/update_event.dart' as _i10;
-import '../app/data/use_cases/user/get_user_data.dart' as _i16;
-import '../app/data/use_cases/user/remove_profile_image.dart' as _i20;
-import '../app/data/use_cases/user/update_organizer_account.dart' as _i21;
-import '../app/data/use_cases/user/update_user_data.dart' as _i22;
-import '../app/repositories/auth_repository.dart' as _i14;
+import '../app/data/use_cases/event/update_event.dart' as _i13;
+import '../app/data/use_cases/ticket/create_ticket.dart' as _i19;
+import '../app/data/use_cases/ticket/get_tickets_by_user_uid.dart' as _i20;
+import '../app/data/use_cases/user/get_user_data.dart' as _i21;
+import '../app/data/use_cases/user/remove_profile_image.dart' as _i25;
+import '../app/data/use_cases/user/update_organizer_account.dart' as _i26;
+import '../app/data/use_cases/user/update_user_data.dart' as _i27;
+import '../app/repositories/auth_repository.dart' as _i17;
 import '../app/repositories/event_repository.dart' as _i4;
-import '../app/repositories/user_repository.dart' as _i13;
-import 'modules/local_module.dart' as _i24;
+import '../app/repositories/ticket_repository.dart' as _i12;
+import '../app/repositories/user_repository.dart' as _i16;
+import 'modules/local_module.dart' as _i29;
 import 'modules/remote_module.dart'
-    as _i23; // ignore_for_file: unnecessary_lambdas
+    as _i28; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -56,30 +61,40 @@ _i1.GetIt $initGetIt(
   gh.singleton<_i8.GetEventList>(_i8.GetEventList(get<_i4.EventRepository>()));
   gh.singleton<_i9.GetEventsByOrganizerUid>(
       _i9.GetEventsByOrganizerUid(get<_i4.EventRepository>()));
-  gh.singleton<_i10.UpdateEvent>(_i10.UpdateEvent(get<_i4.EventRepository>()));
-  gh.factory<_i11.UserLocalDataSource>(
-      () => _i11.UserLocalDataSource(get<_i6.FlutterSecureStorage>()));
-  gh.factory<_i12.UserRemoteDataSource>(() => _i12.UserRemoteDataSource());
-  gh.factory<_i13.UserRepository>(() => _i13.UserRepository(
-        get<_i11.UserLocalDataSource>(),
-        get<_i12.UserRemoteDataSource>(),
+  gh.factory<_i10.TicketLocalDataSource>(() => _i10.TicketLocalDataSource());
+  gh.factory<_i11.TicketRemoteDataSource>(() => _i11.TicketRemoteDataSource());
+  gh.factory<_i12.TicketRepository>(() => _i12.TicketRepository(
+        get<_i10.TicketLocalDataSource>(),
+        get<_i11.TicketRemoteDataSource>(),
       ));
-  gh.factory<_i14.AuthRepository>(
-      () => _i14.AuthRepository(get<_i13.UserRepository>()));
-  gh.singleton<_i15.CreateEvent>(_i15.CreateEvent(get<_i4.EventRepository>()));
-  gh.singleton<_i16.GetUserData>(_i16.GetUserData(get<_i13.UserRepository>()));
-  gh.singleton<_i17.Login>(_i17.Login(get<_i14.AuthRepository>()));
-  gh.singleton<_i18.Logout>(_i18.Logout(get<_i14.AuthRepository>()));
-  gh.singleton<_i19.Register>(_i19.Register(get<_i14.AuthRepository>()));
-  gh.singleton<_i20.RemoveProfileImage>(
-      _i20.RemoveProfileImage(get<_i13.UserRepository>()));
-  gh.singleton<_i21.UpdateOrganizerAccount>(
-      _i21.UpdateOrganizerAccount(get<_i13.UserRepository>()));
-  gh.singleton<_i22.UpdateUserData>(
-      _i22.UpdateUserData(get<_i13.UserRepository>()));
+  gh.singleton<_i13.UpdateEvent>(_i13.UpdateEvent(get<_i4.EventRepository>()));
+  gh.factory<_i14.UserLocalDataSource>(
+      () => _i14.UserLocalDataSource(get<_i6.FlutterSecureStorage>()));
+  gh.factory<_i15.UserRemoteDataSource>(() => _i15.UserRemoteDataSource());
+  gh.factory<_i16.UserRepository>(() => _i16.UserRepository(
+        get<_i14.UserLocalDataSource>(),
+        get<_i15.UserRemoteDataSource>(),
+      ));
+  gh.factory<_i17.AuthRepository>(
+      () => _i17.AuthRepository(get<_i16.UserRepository>()));
+  gh.singleton<_i18.CreateEvent>(_i18.CreateEvent(get<_i4.EventRepository>()));
+  gh.singleton<_i19.CreateTicket>(
+      _i19.CreateTicket(get<_i12.TicketRepository>()));
+  gh.singleton<_i20.GetTicketsByUserUid>(
+      _i20.GetTicketsByUserUid(get<_i12.TicketRepository>()));
+  gh.singleton<_i21.GetUserData>(_i21.GetUserData(get<_i16.UserRepository>()));
+  gh.singleton<_i22.Login>(_i22.Login(get<_i17.AuthRepository>()));
+  gh.singleton<_i23.Logout>(_i23.Logout(get<_i17.AuthRepository>()));
+  gh.singleton<_i24.Register>(_i24.Register(get<_i17.AuthRepository>()));
+  gh.singleton<_i25.RemoveProfileImage>(
+      _i25.RemoveProfileImage(get<_i16.UserRepository>()));
+  gh.singleton<_i26.UpdateOrganizerAccount>(
+      _i26.UpdateOrganizerAccount(get<_i16.UserRepository>()));
+  gh.singleton<_i27.UpdateUserData>(
+      _i27.UpdateUserData(get<_i16.UserRepository>()));
   return get;
 }
 
-class _$RemoteModule extends _i23.RemoteModule {}
+class _$RemoteModule extends _i28.RemoteModule {}
 
-class _$LocalModule extends _i24.LocalModule {}
+class _$LocalModule extends _i29.LocalModule {}

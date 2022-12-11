@@ -4,7 +4,7 @@ import 'package:temparty/app/pages/main/main_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:temparty/app/pages/profile/profile_controller.dart';
 import 'package:temparty/app/pages/search/search_controller.dart';
-import 'package:temparty/app/pages/ticket/ticket_controller.dart';
+import 'package:temparty/app/pages/tickets/tickets_controller.dart';
 
 class MainModule extends Module {
   @override
@@ -12,7 +12,7 @@ class MainModule extends Module {
     Bind.lazySingleton((i) => MainController()),
     Bind.lazySingleton((i) => EventsController()),
     Bind.lazySingleton((i) => SearchController()),
-    Bind.lazySingleton((i) => TicketController()),
+    Bind.lazySingleton((i) => TicketsController()),
     Bind.lazySingleton((i) => ProfileController()),
   ];
 

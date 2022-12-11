@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:temparty/app/pages/profile/profile_page.dart';
 import 'package:temparty/app/pages/search/search_page.dart';
-import 'package:temparty/app/pages/ticket/ticket_page.dart';
+import 'package:temparty/app/pages/tickets/tickets_page.dart';
 
 class MainPage extends StatefulWidget {
   final String title;
@@ -41,7 +41,7 @@ List<Widget> _buildScreens() {
   return [
     const EventsPage(),
     const SearchPage(),
-    const TicketPage(),
+    const TicketsPage(),
     const ProfilePage(),
   ];
 }

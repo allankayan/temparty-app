@@ -8,7 +8,7 @@ import 'package:temparty/app/pages/profile/profile_module.dart';
 import 'package:temparty/app/pages/search/search_module.dart';
 import 'package:temparty/app/pages/splash/splash_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:temparty/app/pages/ticket/ticket_module.dart';
+import 'package:temparty/app/pages/tickets/tickets_module.dart';
 
 class AppModule extends Module {
   @override
@@ -23,7 +23,7 @@ class AppModule extends Module {
     ModuleRoute('/login', module: LoginModule()),
     ModuleRoute('/register', module: RegisterModule()),
     ModuleRoute('/search', module: SearchModule()),
-    ModuleRoute('/ticket', module: TicketModule()),
+    ModuleRoute('/ticket', module: TicketsModule()),
     ModuleRoute('/profile', module: ProfileModule()),
     ModuleRoute('/events', module: EventsModule()),
     ModuleRoute('/event', module: EventModule()),

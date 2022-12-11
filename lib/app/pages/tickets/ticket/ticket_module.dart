@@ -1,5 +1,5 @@
-import 'package:temparty/app/pages/ticket/ticket_page.dart';
-import 'package:temparty/app/pages/ticket/ticket_controller.dart';
+import 'package:temparty/app//pages/tickets/ticket/ticket_page.dart';
+import 'package:temparty/app/pages/tickets/ticket/ticket_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class TicketModule extends Module {
@@ -10,6 +10,6 @@ class TicketModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => const TicketPage()),
+    ChildRoute('/', child: (_, args) => TicketPage()),
   ];
 }

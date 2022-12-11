@@ -49,6 +49,14 @@ mixin _$EventController on _EventControllerBase, Store {
     return _$refreshPageAsyncAction.run(() => super.refreshPage());
   }
 
+  late final _$newTicketAsyncAction =
+      AsyncAction('_EventControllerBase.newTicket', context: context);
+
+  @override
+  Future<void> newTicket() {
+    return _$newTicketAsyncAction.run(() => super.newTicket());
+  }
+
   @override
   String toString() {
     return '''
