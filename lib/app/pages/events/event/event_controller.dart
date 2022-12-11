@@ -37,9 +37,13 @@ abstract class _EventControllerBase with Store {
   Future<void> newTicket() async {
     try {
       final ticketData = {
-        "eventUid": event.value!.eventUid!,
         "userUid": user.value!.userUid!,
+        "eventUid": event.value!.eventUid!,
+        "eventName": event.value!.name!,
+        "eventBanner": event.value!.headerImage!,
+        "eventDate": event.value!.date!,
       };
+
       await createTicket.createTicket(ticketData);
       Modular.to.pop();
     } on Exception catch (e) {
