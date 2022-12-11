@@ -38,9 +38,11 @@ class EventRemoteDataSource {
     final data = snapshot.value as Map?;
     var eventList = <EventModel>[];
 
-    data!.forEach((key, value) {
-      eventList.add(EventModel.fromJson(value));
-    });
+    if (data != null) {
+      data.forEach((key, value) {
+        eventList.add(EventModel.fromJson(value));
+      });
+    }
 
     return eventList;
   }

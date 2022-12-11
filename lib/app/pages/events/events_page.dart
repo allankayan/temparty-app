@@ -166,64 +166,67 @@ class EventsPageState extends State<EventsPage> {
               ),
             ),
           ),
-          FirebaseAnimatedList(
-            shrinkWrap: true,
-            defaultChild: loadingCards(context, false),
-            query: FirebaseDatabase.instance.ref().child('events'),
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, DataSnapshot snapshot, Animation<double> animation, int x) {
-              var event = Map<String, dynamic>.from(snapshot.value as Map);
-              if (event.isNotEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: InkWell(
-                    child: FillImageCard(
-                      color: Colors.deepPurpleAccent,
-                      heightImage: 140,
-                      width: MediaQuery.of(context).size.width,
-                      imageProvider: CachedNetworkImageProvider(
-                        event["headerImage"],
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Text(
-                                event["name"],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: FirebaseAnimatedList(
+              shrinkWrap: true,
+              defaultChild: loadingCards(context, false),
+              query: FirebaseDatabase.instance.ref().child('events'),
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, DataSnapshot snapshot, Animation<double> animation, int x) {
+                var event = Map<String, dynamic>.from(snapshot.value as Map);
+                if (event.isNotEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: InkWell(
+                      child: FillImageCard(
+                        color: Colors.deepPurpleAccent,
+                        heightImage: 140,
+                        width: MediaQuery.of(context).size.width,
+                        imageProvider: CachedNetworkImageProvider(
+                          event["headerImage"],
+                        ),
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Text(
+                                  event["name"],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              event["date"],
-                              style: const TextStyle(
-                                color: Colors.white,
+                              Text(
+                                event["date"],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
+                      onTap: () {
+                        Modular.to.pushNamed("/events/event/", arguments: event["eventUid"]);
+                      },
                     ),
-                    onTap: () {
-                      Modular.to.pushNamed("/events/event/", arguments: event["eventUid"]);
-                    },
-                  ),
-                );
-              } else {
-                return const SizedBox(
-                  child: Center(
-                    child: Text('Não foi possível encontrar os eventos, verifique sua conexão'),
-                  ),
-                );
-              }
-            },
+                  );
+                } else {
+                  return const SizedBox(
+                    child: Center(
+                      child: Text('Não foi possível encontrar os eventos, verifique sua conexão'),
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),

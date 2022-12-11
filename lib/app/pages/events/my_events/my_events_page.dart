@@ -227,9 +227,7 @@ class MyEventsPageState extends State<MyEventsPage> {
                 left: Colors.orangeAccent,
                 right: Colors.pink,
                 onPressed: () {
-                  Modular.to.popAndPushNamed('/events/create').then((value) async {
-                    await controller.refreshPage();
-                  });
+                  Modular.to.pushNamed('/events/create').then((value) => controller.refreshPage());
                 },
               ),
             ),
