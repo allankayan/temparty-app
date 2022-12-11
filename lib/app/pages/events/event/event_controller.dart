@@ -25,6 +25,6 @@ abstract class _EventControllerBase with Store {
 
   @action
   Future<void> refreshPage() async {
-    event = event = _getEvent.getEventByUid(eventUid: uid).asObservable();
+    event = _getEvent.getEventByUid(eventUid: uid).asObservable();
   }
 }

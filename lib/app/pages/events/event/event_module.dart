@@ -7,7 +7,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 class EventModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => EventController(i.args.data)),
+    Bind(
+      (i) => EventController(i.args.data),
+    ),
     Bind.lazySingleton((i) => EditEventController(i.args.data)),
   ];
 

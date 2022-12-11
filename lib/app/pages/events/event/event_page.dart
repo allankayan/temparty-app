@@ -15,10 +15,9 @@ class EventPage extends StatefulWidget {
   EventPageState createState() => EventPageState();
 }
 
-class EventPageState extends State<EventPage> {
+// ignore: deprecated_member_use
+class EventPageState extends ModularState<EventPage, EventController> {
   late bool _isOwnEvent;
-
-  final EventController controller = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class EventPageState extends State<EventPage> {
                   color: Colors.purpleAccent,
                 ),
                 onPressed: () {
-                  Modular.to.popUntil(ModalRoute.withName('/events/my_events'));
+                  Modular.to.pop();
                 },
               ),
             ),
@@ -244,7 +243,7 @@ class EventPageState extends State<EventPage> {
                 ),
               ),
               onTap: () {
-                Modular.to.popUntil(ModalRoute.withName('/events/my_events'));
+                Modular.to.pop();
               },
             ),
           ),

@@ -157,7 +157,7 @@ class EventsPageState extends State<EventsPage> {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                'Últimos eventos',
+                'Você pode se interessar:',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black87,

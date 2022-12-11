@@ -64,58 +64,72 @@ class MyEventsPageState extends State<MyEventsPage> {
 
   Widget eventList(BuildContext context, List<EventModel> events) {
     return SingleChildScrollView(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: events.length,
-        padding: const EdgeInsets.only(top: 10),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return InkWell(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: FillImageCard(
-                color: Colors.deepPurpleAccent,
-                heightImage: 140,
-                width: MediaQuery.of(context).size.width,
-                imageProvider: CachedNetworkImageProvider(
-                  events[index].headerImage!,
-                ),
-                title: Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: Text(
-                          events[index].name!,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Observer(
+          builder: (context) {
+            final events = controller.events.value;
+            if (events!.isNotEmpty) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: events.length,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: FillImageCard(
+                        color: Colors.deepPurpleAccent,
+                        heightImage: 140,
+                        width: MediaQuery.of(context).size.width,
+                        imageProvider: CachedNetworkImageProvider(
+                          events[index].headerImage!,
+                        ),
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Text(
+                                  events[index].name!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                events[index].date!,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      Text(
-                        events[index].date!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            onTap: () {
-              Modular.to.pushNamed("/events/event/", arguments: events[index].eventUid);
-            },
-          );
-        },
+                    ),
+                    onTap: () {
+                      Modular.to
+                          .pushNamed("/events/event/", arguments: events[index].eventUid)
+                          .then((value) => setState(() {
+                                controller.refreshPage();
+                              }));
+                    },
+                  );
+                },
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
-    ));
+    );
   }
 
   Widget loadingCards(BuildContext context, bool isStoryCard) {
