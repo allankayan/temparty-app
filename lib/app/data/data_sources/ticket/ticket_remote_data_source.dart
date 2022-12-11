@@ -14,6 +14,13 @@ class TicketRemoteDataSource {
     await ref.child(ticket.ticketUid!).set(ticket.toJson());
   }
 
+  Future<TicketModel> getTicketByUid(String ticketUid) async {
+    final snapshot = await ref.child(ticketUid).get();
+    final data = snapshot.value as Map<dynamic, dynamic>;
+
+    return TicketModel.fromJson(data);
+  }
+
   Future<List<TicketModel>> getTicketsByUserUid(String userUid) async {
     final snapshot = await ref.orderByChild("userUid").equalTo(userUid).get();
     final data = snapshot.value as Map?;

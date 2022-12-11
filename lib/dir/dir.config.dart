@@ -15,27 +15,28 @@ import '../app/data/data_sources/ticket/ticket_local_data_source.dart' as _i10;
 import '../app/data/data_sources/ticket/ticket_remote_data_source.dart' as _i11;
 import '../app/data/data_sources/user/user_local_data_source.dart' as _i14;
 import '../app/data/data_sources/user/user_remote_data_source.dart' as _i15;
-import '../app/data/use_cases/auth/login.dart' as _i22;
-import '../app/data/use_cases/auth/logout.dart' as _i23;
-import '../app/data/use_cases/auth/register.dart' as _i24;
+import '../app/data/use_cases/auth/login.dart' as _i23;
+import '../app/data/use_cases/auth/logout.dart' as _i24;
+import '../app/data/use_cases/auth/register.dart' as _i25;
 import '../app/data/use_cases/event/create_event.dart' as _i18;
 import '../app/data/use_cases/event/get_event_by_uid.dart' as _i7;
 import '../app/data/use_cases/event/get_event_list.dart' as _i8;
 import '../app/data/use_cases/event/get_events_by_organizer_uid.dart' as _i9;
 import '../app/data/use_cases/event/update_event.dart' as _i13;
 import '../app/data/use_cases/ticket/create_ticket.dart' as _i19;
-import '../app/data/use_cases/ticket/get_tickets_by_user_uid.dart' as _i20;
-import '../app/data/use_cases/user/get_user_data.dart' as _i21;
-import '../app/data/use_cases/user/remove_profile_image.dart' as _i25;
-import '../app/data/use_cases/user/update_organizer_account.dart' as _i26;
-import '../app/data/use_cases/user/update_user_data.dart' as _i27;
+import '../app/data/use_cases/ticket/get_ticket_by_uid.dart' as _i20;
+import '../app/data/use_cases/ticket/get_tickets_by_user_uid.dart' as _i21;
+import '../app/data/use_cases/user/get_user_data.dart' as _i22;
+import '../app/data/use_cases/user/remove_profile_image.dart' as _i26;
+import '../app/data/use_cases/user/update_organizer_account.dart' as _i27;
+import '../app/data/use_cases/user/update_user_data.dart' as _i28;
 import '../app/repositories/auth_repository.dart' as _i17;
 import '../app/repositories/event_repository.dart' as _i4;
 import '../app/repositories/ticket_repository.dart' as _i12;
 import '../app/repositories/user_repository.dart' as _i16;
-import 'modules/local_module.dart' as _i29;
+import 'modules/local_module.dart' as _i30;
 import 'modules/remote_module.dart'
-    as _i28; // ignore_for_file: unnecessary_lambdas
+    as _i29; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -80,21 +81,23 @@ _i1.GetIt $initGetIt(
   gh.singleton<_i18.CreateEvent>(_i18.CreateEvent(get<_i4.EventRepository>()));
   gh.singleton<_i19.CreateTicket>(
       _i19.CreateTicket(get<_i12.TicketRepository>()));
-  gh.singleton<_i20.GetTicketsByUserUid>(
-      _i20.GetTicketsByUserUid(get<_i12.TicketRepository>()));
-  gh.singleton<_i21.GetUserData>(_i21.GetUserData(get<_i16.UserRepository>()));
-  gh.singleton<_i22.Login>(_i22.Login(get<_i17.AuthRepository>()));
-  gh.singleton<_i23.Logout>(_i23.Logout(get<_i17.AuthRepository>()));
-  gh.singleton<_i24.Register>(_i24.Register(get<_i17.AuthRepository>()));
-  gh.singleton<_i25.RemoveProfileImage>(
-      _i25.RemoveProfileImage(get<_i16.UserRepository>()));
-  gh.singleton<_i26.UpdateOrganizerAccount>(
-      _i26.UpdateOrganizerAccount(get<_i16.UserRepository>()));
-  gh.singleton<_i27.UpdateUserData>(
-      _i27.UpdateUserData(get<_i16.UserRepository>()));
+  gh.singleton<_i20.GetTicketByUid>(
+      _i20.GetTicketByUid(get<_i12.TicketRepository>()));
+  gh.singleton<_i21.GetTicketsByUserUid>(
+      _i21.GetTicketsByUserUid(get<_i12.TicketRepository>()));
+  gh.singleton<_i22.GetUserData>(_i22.GetUserData(get<_i16.UserRepository>()));
+  gh.singleton<_i23.Login>(_i23.Login(get<_i17.AuthRepository>()));
+  gh.singleton<_i24.Logout>(_i24.Logout(get<_i17.AuthRepository>()));
+  gh.singleton<_i25.Register>(_i25.Register(get<_i17.AuthRepository>()));
+  gh.singleton<_i26.RemoveProfileImage>(
+      _i26.RemoveProfileImage(get<_i16.UserRepository>()));
+  gh.singleton<_i27.UpdateOrganizerAccount>(
+      _i27.UpdateOrganizerAccount(get<_i16.UserRepository>()));
+  gh.singleton<_i28.UpdateUserData>(
+      _i28.UpdateUserData(get<_i16.UserRepository>()));
   return get;
 }
 
-class _$RemoteModule extends _i28.RemoteModule {}
+class _$RemoteModule extends _i29.RemoteModule {}
 
-class _$LocalModule extends _i29.LocalModule {}
+class _$LocalModule extends _i30.LocalModule {}

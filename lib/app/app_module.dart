@@ -23,7 +23,7 @@ class AppModule extends Module {
     ModuleRoute('/login', module: LoginModule()),
     ModuleRoute('/register', module: RegisterModule()),
     ModuleRoute('/search', module: SearchModule()),
-    ModuleRoute('/ticket', module: TicketsModule()),
+    ModuleRoute('/tickets', module: TicketsModule()),
     ModuleRoute('/profile', module: ProfileModule()),
     ModuleRoute('/events', module: EventsModule()),
     ModuleRoute('/event', module: EventModule()),

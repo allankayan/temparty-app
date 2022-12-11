@@ -259,7 +259,13 @@ class TicketsPageState extends State<TicketsPage> {
                       ),
                     ),
                     onTap: () {
-                      Modular.to.pushNamed("/events/event/", arguments: ticket["eventUid"]);
+                      Modular.to.pushNamed(
+                        "/tickets/ticket/",
+                        arguments: {
+                          "uid": ticket["ticketUid"],
+                          "eventUid": ticket["eventUid"],
+                        },
+                      );
                     },
                   ),
                 );
