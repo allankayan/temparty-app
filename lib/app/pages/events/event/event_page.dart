@@ -201,6 +201,19 @@ class EventPageState extends ModularState<EventPage, EventController> {
             ],
           ),
           Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "${event.placeAddress} - ${event.placeCity} - ${event.placeZipcode}".toUpperCase(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+                fontWeight: FontWeight.w600,
+                wordSpacing: 4,
+              ),
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: Column(
               children: [
