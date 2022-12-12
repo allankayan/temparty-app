@@ -57,6 +57,16 @@ mixin _$TicketController on _TicketControllerBase, Store {
     });
   }
 
+  late final _$getTicketScreenshotAsyncAction = AsyncAction(
+      '_TicketControllerBase.getTicketScreenshot',
+      context: context);
+
+  @override
+  Future<void> getTicketScreenshot() {
+    return _$getTicketScreenshotAsyncAction
+        .run(() => super.getTicketScreenshot());
+  }
+
   @override
   String toString() {
     return '''

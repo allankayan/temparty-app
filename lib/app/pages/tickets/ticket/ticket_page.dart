@@ -2,6 +2,7 @@ import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:temparty/app/data/model/event_model.dart';
 import 'package:temparty/app/data/model/ticket_model.dart';
@@ -29,60 +30,65 @@ class TicketPageState extends ModularState<TicketPage, TicketController> {
         final user = controller.user.value;
         final event = controller.event.value;
         if (ticket != null && user != null && event != null) {
-          return DraggableHome(
-            title: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: GradientText(
-                'Meu convite',
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.deepPurple,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 2,
+          return Screenshot(
+            controller: controller.screenshotController,
+            child: DraggableHome(
+              title: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: GradientText(
+                  'Meu convite',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2,
+                  ),
+                  colors: const [
+                    Colors.purpleAccent,
+                    Colors.deepPurpleAccent,
+                  ],
                 ),
-                colors: const [
-                  Colors.purpleAccent,
-                  Colors.deepPurpleAccent,
-                ],
               ),
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: IconButton(
-                style: IconButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(20),
+              leading: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: IconButton(
+                  style: IconButton.styleFrom(
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(20),
+                  ),
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.purpleAccent,
+                  ),
+                  onPressed: () {
+                    Modular.to.pop();
+                  },
                 ),
-                icon: const Icon(
-                  Icons.arrow_back_rounded,
-                  color: Colors.purpleAccent,
+              ),
+              centerTitle: false,
+              curvedBodyRadius: 8,
+              headerExpandedHeight: 0.15,
+              fullyStretchable: false,
+              backgroundColor: Colors.white,
+              appBarColor: Colors.white,
+              headerWidget: headerWidget(context),
+              headerBottomBar: bottomHeaderWidget(context),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GradientButtonWidget(
+                  icon: Icons.download,
+                  text: "Baixar convite",
+                  left: Colors.purpleAccent,
+                  right: Colors.deepPurple,
+                  onPressed: () async {
+                    await controller.getTicketScreenshot();
+                  },
                 ),
-                onPressed: () {
-                  Modular.to.pop();
-                },
               ),
+              body: [
+                ticketInfo(context, user, ticket, event),
+              ],
             ),
-            centerTitle: false,
-            curvedBodyRadius: 8,
-            headerExpandedHeight: 0.15,
-            fullyStretchable: false,
-            backgroundColor: Colors.white,
-            appBarColor: Colors.white,
-            headerWidget: headerWidget(context),
-            headerBottomBar: bottomHeaderWidget(context),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GradientButtonWidget(
-                icon: Icons.download,
-                text: "Baixar convite",
-                left: Colors.purpleAccent,
-                right: Colors.deepPurple,
-                onPressed: () {},
-              ),
-            ),
-            body: [
-              ticketInfo(context, user, ticket, event),
-            ],
           );
         } else {
           return const SizedBox(

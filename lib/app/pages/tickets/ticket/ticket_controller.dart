@@ -1,4 +1,11 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:mobx/mobx.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:temparty/app/data/model/event_model.dart';
 import 'package:temparty/app/data/model/ticket_model.dart';
 import 'package:temparty/app/data/model/user_model.dart';
@@ -34,4 +41,28 @@ abstract class _TicketControllerBase with Store {
   @observable
   late ObservableFuture<EventModel> event =
       _getEvent.getEventByUid(eventUid: eventUid).asObservable();
+
+  ScreenshotController screenshotController = ScreenshotController();
+
+  @action
+  Future<void> getTicketScreenshot() async {
+    final uint8List = await screenshotController.capture();
+    String tempPath = (await getTemporaryDirectory()).path;
+    String fileName = "Convite Temparty - ${event.value!.name}";
+
+    File file = await File('$tempPath/$fileName.png').create();
+    file.writeAsBytesSync(uint8List!);
+
+    final PdfDocument document = PdfDocument();
+    final PdfBitmap image = PdfBitmap(file.readAsBytesSync());
+
+    document.pages.add().graphics.drawImage(image, const Rect.fromLTWH(0, 0, 500, 1000));
+
+    File pdf = await File('$tempPath/$fileName.pdf').create();
+
+    pdf.writeAsBytesSync(await document.save());
+
+    // ignore: deprecated_member_use
+    await Share.shareFiles([pdf.path]);
+  }
 }
