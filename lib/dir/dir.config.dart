@@ -64,10 +64,8 @@ _i1.GetIt $initGetIt(
       _i9.GetEventsByOrganizerUid(get<_i4.EventRepository>()));
   gh.factory<_i10.TicketLocalDataSource>(() => _i10.TicketLocalDataSource());
   gh.factory<_i11.TicketRemoteDataSource>(() => _i11.TicketRemoteDataSource());
-  gh.factory<_i12.TicketRepository>(() => _i12.TicketRepository(
-        get<_i10.TicketLocalDataSource>(),
-        get<_i11.TicketRemoteDataSource>(),
-      ));
+  gh.factory<_i12.TicketRepository>(
+      () => _i12.TicketRepository(get<_i11.TicketRemoteDataSource>()));
   gh.singleton<_i13.UpdateEvent>(_i13.UpdateEvent(get<_i4.EventRepository>()));
   gh.factory<_i14.UserLocalDataSource>(
       () => _i14.UserLocalDataSource(get<_i6.FlutterSecureStorage>()));
