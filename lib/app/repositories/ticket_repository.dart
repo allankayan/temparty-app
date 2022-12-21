@@ -1,6 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temparty/app/data/data_sources/ticket/ticket_local_data_source.dart';
 import 'package:temparty/app/data/data_sources/ticket/ticket_remote_data_source.dart';
 import 'package:temparty/app/data/model/ticket_model.dart';
 

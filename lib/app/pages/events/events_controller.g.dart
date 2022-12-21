@@ -25,6 +25,22 @@ mixin _$EventsController on _EventsControllerBase, Store {
     });
   }
 
+  late final _$eventsAtom =
+      Atom(name: '_EventsControllerBase.events', context: context);
+
+  @override
+  ObservableFuture<List<EventModel>> get events {
+    _$eventsAtom.reportRead();
+    return super.events;
+  }
+
+  @override
+  set events(ObservableFuture<List<EventModel>> value) {
+    _$eventsAtom.reportWrite(value, super.events, () {
+      super.events = value;
+    });
+  }
+
   late final _$refreshPageAsyncAction =
       AsyncAction('_EventsControllerBase.refreshPage', context: context);
 
@@ -36,7 +52,8 @@ mixin _$EventsController on _EventsControllerBase, Store {
   @override
   String toString() {
     return '''
-user: ${user}
+user: ${user},
+events: ${events}
     ''';
   }
 }

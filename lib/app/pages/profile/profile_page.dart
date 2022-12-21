@@ -1,6 +1,5 @@
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:temparty/app/data/model/user_model.dart';
 import 'package:transparent_image/transparent_image.dart';

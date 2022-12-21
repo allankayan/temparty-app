@@ -1,6 +1,5 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
 import 'package:temparty/app/data/model/event_model.dart';
 import 'package:temparty/app/data/use_cases/event/get_event_list.dart';

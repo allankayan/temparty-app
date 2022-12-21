@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:firebase_database/firebase_database.dart' as _i5;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i5;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i6;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -55,7 +55,7 @@ _i1.GetIt $initGetIt(
   gh.factory<_i3.EventRemoteDataSource>(() => _i3.EventRemoteDataSource());
   gh.factory<_i4.EventRepository>(
       () => _i4.EventRepository(get<_i3.EventRemoteDataSource>()));
-  gh.singleton<_i5.FirebaseDatabase>(remoteModule.firebaseDatabase);
+  gh.singleton<_i5.FirebaseFirestore>(remoteModule.firebaseDatabase);
   gh.singleton<_i6.FlutterSecureStorage>(localModule.secureStorage);
   gh.singleton<_i7.GetEventByUid>(
       _i7.GetEventByUid(get<_i4.EventRepository>()));

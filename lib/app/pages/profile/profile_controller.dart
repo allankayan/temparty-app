@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:temparty/app/data/model/user_model.dart';
 import 'package:temparty/app/data/use_cases/auth/logout.dart';
 import 'package:temparty/app/data/use_cases/user/get_user_data.dart';

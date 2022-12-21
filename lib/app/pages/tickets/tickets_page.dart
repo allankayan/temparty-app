@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_loading/card_loading.dart';
 import 'package:draggable_home/draggable_home.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_card/image_card.dart';
@@ -11,8 +9,7 @@ import 'package:temparty/app/pages/tickets/tickets_controller.dart';
 import 'package:flutter/material.dart';
 
 class TicketsPage extends StatefulWidget {
-  final String title;
-  const TicketsPage({Key? key, this.title = 'TicketsPage'}) : super(key: key);
+  const TicketsPage({Key? key}) : super(key: key);
   @override
   TicketsPageState createState() => TicketsPageState();
 }
@@ -208,72 +205,73 @@ class TicketsPageState extends State<TicketsPage> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: FirebaseAnimatedList(
-            shrinkWrap: true,
-            defaultChild: loadingCards(context, false),
-            query: FirebaseDatabase.instance
-                .ref()
-                .child('tickets')
-                .orderByChild("userUid")
-                .equalTo(controller.currentUser!.uid),
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, DataSnapshot snapshot, Animation<double> animation, int x) {
-              var ticket = Map<String, dynamic>.from(snapshot.value as Map);
+          child: Observer(
+            builder: (context) {
+              final tickets = controller.tickets.value;
 
-              if (ticket.isNotEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: InkWell(
-                    child: FillImageCard(
-                      color: Colors.deepPurpleAccent,
-                      heightImage: 140,
-                      width: MediaQuery.of(context).size.width,
-                      imageProvider: CachedNetworkImageProvider(
-                        ticket["eventBanner"],
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Text(
-                                ticket["eventName"],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
+              if (tickets != null && tickets.isNotEmpty) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: tickets.length,
+                  padding: EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: FillImageCard(
+                          color: Colors.deepPurpleAccent,
+                          heightImage: 140,
+                          width: MediaQuery.of(context).size.width,
+                          imageProvider: CachedNetworkImageProvider(
+                            tickets[index].eventBanner!,
+                          ),
+                          title: Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.6,
+                                  child: Text(
+                                    tickets[index].eventName!,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  tickets[index].eventDate!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              ticket["eventDate"],
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    onTap: () {
-                      Modular.to.pushNamed(
-                        "/tickets/ticket/",
-                        arguments: {
-                          "uid": ticket["ticketUid"],
-                          "eventUid": ticket["eventUid"],
-                        },
-                      );
-                    },
-                  ),
+                      onTap: () {
+                        Modular.to.pushNamed(
+                          "/tickets/ticket/",
+                          arguments: {
+                            "uid": tickets[index].ticketUid,
+                            "eventUid": tickets[index].eventUid
+                          },
+                        );
+                      },
+                    );
+                  },
+                );
+              } else if (tickets != null && tickets.isEmpty) {
+                return const SizedBox(
+                  child: Center(child: Text("Você não tem convites")),
                 );
               } else {
                 return const SizedBox(
-                  child: Center(
-                    child: Text('Não foi possível encontrar os eventos, verifique sua conexão'),
-                  ),
+                  child: Center(child: CircularProgressIndicator()),
                 );
               }
             },

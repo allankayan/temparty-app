@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_loading/card_loading.dart';
 import 'package:draggable_home/draggable_home.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_card/image_card.dart';
@@ -102,134 +100,152 @@ class EventsPageState extends State<EventsPage> {
   }
 
   Widget storyList(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: GradientText(
-              'EVENTOS POPULARES',
-              style: const TextStyle(
-                fontSize: 24,
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.w800,
-              ),
-              colors: const [
-                Colors.deepPurple,
-                Colors.indigoAccent,
-                Colors.pinkAccent,
+    return Observer(
+      builder: (context) {
+        final events = controller.events.value;
+
+        if (events != null && events.isNotEmpty) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: GradientText(
+                    'EVENTOS POPULARES',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    colors: const [
+                      Colors.deepPurple,
+                      Colors.indigoAccent,
+                      Colors.pinkAccent,
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 150,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: events.length,
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return StoryCardWidget(
+                        image: events[index].profileImage,
+                        name: events[index].name,
+                        onTap: () {
+                          Modular.to.pushNamed("/events/event/", arguments: events[index].eventUid);
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const Divider(),
               ],
             ),
-          ),
-          SizedBox(
-            height: 150,
-            child: FirebaseAnimatedList(
-              query: FirebaseDatabase.instance.ref().child('events').orderByChild('date'),
-              defaultChild: loadingCards(context, true),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, DataSnapshot snapshot, Animation<double> animation, int x) {
-                var event = Map<String, dynamic>.from(snapshot.value as Map);
-                return StoryCardWidget(
-                  image: event["profileImage"],
-                  name: event["name"],
-                  onTap: () {
-                    Modular.to.pushNamed("/events/event/", arguments: event["eventUid"]);
-                  },
-                );
-              },
+          );
+        } else {
+          return const SizedBox(
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-          ),
-          const Divider(),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 
   Widget eventList(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Você pode se interessar:',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w600,
+    return Observer(
+      builder: (context) {
+        final events = controller.events.value;
+
+        if (events != null && events.isNotEmpty) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      'Você pode se interessar:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: FirebaseAnimatedList(
-              shrinkWrap: true,
-              defaultChild: loadingCards(context, false),
-              query: FirebaseDatabase.instance.ref().child('events'),
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, DataSnapshot snapshot, Animation<double> animation, int x) {
-                var event = Map<String, dynamic>.from(snapshot.value as Map);
-                if (event.isNotEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: InkWell(
-                      child: FillImageCard(
-                        color: Colors.deepPurpleAccent,
-                        heightImage: 140,
-                        width: MediaQuery.of(context).size.width,
-                        imageProvider: CachedNetworkImageProvider(
-                          event["headerImage"],
-                        ),
-                        title: Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text(
-                                  event["name"],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: events.length,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: FillImageCard(
+                            color: Colors.deepPurpleAccent,
+                            heightImage: 140,
+                            width: MediaQuery.of(context).size.width,
+                            imageProvider: CachedNetworkImageProvider(
+                              events[index].headerImage!,
+                            ),
+                            title: Padding(
+                              padding: const EdgeInsets.only(left: 5.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.6,
+                                    child: Text(
+                                      events[index].name!,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Text(
+                                    events[index].date!,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                event["date"],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                      onTap: () {
-                        Modular.to.pushNamed("/events/event/", arguments: event["eventUid"]);
-                      },
-                    ),
-                  );
-                } else {
-                  return const SizedBox(
-                    child: Center(
-                      child: Text('Não foi possível encontrar os eventos, verifique sua conexão'),
-                    ),
-                  );
-                }
-              },
+                        onTap: () {
+                          Modular.to.pushNamed("/events/event/", arguments: events[index].eventUid);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
+          );
+        } else {
+          return const SizedBox(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 

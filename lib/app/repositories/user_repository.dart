@@ -28,8 +28,7 @@ class UserRepository {
 
   Future<void> createUserData(Map<String, String> data) async {
     await _userLocal.deleteUserData();
-    final userData = jsonEncode(data);
-    final user = UserModel.fromJson(jsonDecode(userData));
+    final user = UserModel.fromJson(data);
 
     await _userRemote.createUserData(user);
   }

@@ -1,8 +1,8 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 @module
 abstract class RemoteModule {
   @singleton
-  FirebaseDatabase get firebaseDatabase => FirebaseDatabase.instance;
+  FirebaseFirestore get firebaseDatabase => FirebaseFirestore.instance;
 }
