@@ -25,24 +25,24 @@ class UserModel extends Equatable {
     this.isOrganizer,
   });
 
-  UserModel.fromJson(Map<dynamic, dynamic>? json) {
+  UserModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
       return;
     }
-    userUid = json['userUid'];
-    username = json['username'];
-    displayName = json['displayName'];
-    email = json['email'];
-    birthday = json['birthday'];
-    bio = json['bio'];
-    address = json['address'];
-    profileImage = json['profileImage'];
-    gender = json['gender'];
-    isOrganizer = json['isOrganizer'];
+    userUid = json['userUid'] as String?;
+    username = json['username'] as String?;
+    displayName = json['displayName'] as String?;
+    email = json['email'] as String?;
+    birthday = json['birthday'] as String?;
+    bio = json['bio'] as String?;
+    address = json['address'] as String?;
+    profileImage = json['profileImage'] as String?;
+    gender = json['gender'] as String?;
+    isOrganizer = json['isOrganizer'] as bool?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['userUid'] = userUid;
     data['username'] = username;
     data['displayName'] = displayName;

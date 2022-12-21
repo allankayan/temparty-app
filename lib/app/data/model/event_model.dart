@@ -31,7 +31,7 @@ class EventModel extends Equatable {
     this.observations,
   });
 
-  EventModel.fromJson(Map<dynamic, dynamic>? json) {
+  EventModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
       return;
     }
@@ -51,7 +51,7 @@ class EventModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['eventUid'] = eventUid;
     data['name'] = name;
     data['profileImage'] = profileImage;

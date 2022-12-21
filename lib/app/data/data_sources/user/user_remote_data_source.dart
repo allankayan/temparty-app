@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
@@ -10,20 +10,22 @@ import 'package:temparty/app/data/model/user_model.dart';
 
 @injectable
 class UserRemoteDataSource {
-  final DatabaseReference ref = FirebaseDatabase.instance.ref().child("users");
+  final CollectionReference users = FirebaseFirestore.instance.collection('users');
+
   final Reference storage = FirebaseStorage.instance.ref().child("profile_images");
 
   Future<UserModel?> getUserData() async {
     final currentUser = FirebaseAuth.instance.currentUser;
 
-    final snapshot = await ref.child(currentUser!.uid).get();
-    final data = snapshot.value as Map<dynamic, dynamic>;
+    // final snapshot = await ref.child(currentUser!.uid).get();
+    final snapshot = await users.doc(currentUser!.uid).get();
+    final data = snapshot.data() as Map<String, dynamic>;
 
     return UserModel.fromJson(data);
   }
 
   Future<void> createUserData(UserModel? user) async {
-    await ref.child(user!.userUid!).set(user.toJson());
+    await users.doc(user!.userUid!).set(user.toJson());
   }
 
   Future<void> updateUserData(Map<String, String> user, XFile? image) async {
@@ -38,7 +40,7 @@ class UserRemoteDataSource {
       user.update('profileImage', (value) => url, ifAbsent: () => url);
     }
 
-    await ref.child(currentUser!.uid).update(user);
+    await users.doc(currentUser!.uid).update(user);
   }
 
   Future<void> removeUserProfileImage() async {
@@ -46,12 +48,12 @@ class UserRemoteDataSource {
 
     final imageRef = storage.child("${currentUser!.uid}.jpg");
     await imageRef.delete();
-    await ref.child(currentUser.uid).child('profileImage').remove();
+    await users.doc(currentUser.uid).update({'profileImage': FieldValue.delete()});
   }
 
   Future<void> updateOrganizerAccount(bool? value) async {
     final currentUser = FirebaseAuth.instance.currentUser;
 
-    await ref.child(currentUser!.uid).child('isOrganizer').set(value);
+    await users.doc(currentUser!.uid).update({'isOrganizer': value});
   }
 }

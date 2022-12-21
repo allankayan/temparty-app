@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:temparty/app/data/model/event_model.dart';
@@ -10,38 +10,42 @@ import 'package:uuid/uuid.dart';
 
 @injectable
 class EventRemoteDataSource {
-  final DatabaseReference ref = FirebaseDatabase.instance.ref().child("events");
+  final CollectionReference events = FirebaseFirestore.instance.collection('events');
   final Reference storage = FirebaseStorage.instance.ref().child("events");
   var uuid = const Uuid();
 
   Future<List<EventModel>> getEventList() async {
-    final snapshot = await ref.get();
-    final data = snapshot.value as Map?;
+    final snapshot = await events.get();
+    final list = snapshot.docs;
     var eventList = <EventModel>[];
 
-    data!.forEach((key, value) {
-      eventList.add(EventModel.fromJson(value));
-    });
+    if (list.isNotEmpty) {
+      for (var event in list) {
+        final eventData = event.data() as Map<String, dynamic>;
+        eventList.add(EventModel.fromJson(eventData));
+      }
+    }
 
     return eventList;
   }
 
   Future<EventModel> getEventByUid(String eventUid) async {
-    final snapshot = await ref.child(eventUid).get();
-    final data = snapshot.value as Map<dynamic, dynamic>;
+    final snapshot = await events.doc(eventUid).get();
+    final data = snapshot.data() as Map<String, dynamic>;
 
     return EventModel.fromJson(data);
   }
 
   Future<List<EventModel>> getEventsByOrganizerUid(String organizerUid) async {
-    final snapshot = await ref.orderByChild("organizerUid").equalTo(organizerUid).get();
-    final data = snapshot.value as Map?;
+    final snapshot = await events.where('organizerUid', isEqualTo: organizerUid).get();
+    final list = snapshot.docs;
     var eventList = <EventModel>[];
 
-    if (data != null) {
-      data.forEach((key, value) {
-        eventList.add(EventModel.fromJson(value));
-      });
+    if (list.isNotEmpty) {
+      for (var event in list) {
+        final eventData = event.data() as Map<String, dynamic>;
+        eventList.add(EventModel.fromJson(eventData));
+      }
     }
 
     return eventList;
@@ -68,7 +72,7 @@ class EventRemoteDataSource {
       event.headerImage = url;
     }
 
-    await ref.child(event.eventUid!).set(event.toJson());
+    await events.doc(event.eventUid!).set(event.toJson());
   }
 
   Future<void> updateEvent(
@@ -93,6 +97,6 @@ class EventRemoteDataSource {
       data.update('headerImage', (value) => url, ifAbsent: () => url);
     }
 
-    await ref.child(event.eventUid!).update(data);
+    await events.doc(event.eventUid!).update(data);
   }
 }
