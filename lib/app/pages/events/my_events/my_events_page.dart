@@ -182,16 +182,15 @@ class MyEventsPageState extends State<MyEventsPage> {
         height: 250,
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.deepPurpleAccent,
-              blurRadius: 0,
-              spreadRadius: 0,
-            )
-          ],
-          border: Border.all(color: Colors.grey, strokeAlign: StrokeAlign.center),
-        ),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.deepPurpleAccent,
+                blurRadius: 0,
+                spreadRadius: 0,
+              )
+            ],
+            border: Border.all(color: Colors.grey)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -167,7 +167,7 @@ class TicketsPageState extends State<TicketsPage> {
               spreadRadius: 0,
             )
           ],
-          border: Border.all(color: Colors.grey, strokeAlign: StrokeAlign.center),
+          border: Border.all(color: Colors.grey),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

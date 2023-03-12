@@ -263,7 +263,7 @@ class EventsPageState extends State<EventsPage> {
               spreadRadius: 0,
             )
           ],
-          border: Border.all(color: Colors.grey, strokeAlign: StrokeAlign.center),
+          border: Border.all(color: Colors.grey),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
