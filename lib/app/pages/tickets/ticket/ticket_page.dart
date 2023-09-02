@@ -244,11 +244,17 @@ class TicketPageState extends ModularState<TicketPage, TicketController> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: QrImage(
-              data: "${ticket.ticketUid} ${ticket.eventUid} ${ticket.userUid}",
+            child: QrImageView(
+              data: "www.temparty.com.br",
               version: QrVersions.auto,
               size: 160.0,
-              foregroundColor: Colors.deepPurple,
+              eyeStyle: const QrEyeStyle(
+                color: Colors.deepPurple,
+              ),
+              dataModuleStyle: const QrDataModuleStyle(
+                color: Colors.deepPurple,
+              ),
+              embeddedImage: const AssetImage('assets/images/temparty.png'),
             ),
           ),
           const Text(

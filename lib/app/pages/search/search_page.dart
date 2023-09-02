@@ -3,7 +3,7 @@ import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_card/image_card.dart';
-import 'package:temparty/app/pages/search/search_controller.dart';
+import 'package:temparty/app/pages/search/search_controller.dart' as search;
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  final SearchController controller = Modular.get();
+  final search.SearchController controller = Modular.get();
 
   @override
   Widget build(BuildContext context) {

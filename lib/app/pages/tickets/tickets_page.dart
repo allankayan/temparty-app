@@ -169,9 +169,9 @@ class TicketsPageState extends State<TicketsPage> {
           ],
           border: Border.all(color: Colors.grey),
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(

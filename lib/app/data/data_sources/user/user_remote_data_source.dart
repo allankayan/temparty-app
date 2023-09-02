@@ -17,7 +17,6 @@ class UserRemoteDataSource {
   Future<UserModel?> getUserData() async {
     final currentUser = FirebaseAuth.instance.currentUser;
 
-    // final snapshot = await ref.child(currentUser!.uid).get();
     final snapshot = await users.doc(currentUser!.uid).get();
     final data = snapshot.data() as Map<String, dynamic>;
 
