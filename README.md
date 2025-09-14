@@ -1,5 +1,29 @@
-# Temparty
+# Temparty 🎉  
+A cross-platform app for event management and digital invitations.  
 
-Um aplicativo capaz de auxiliar organizadores de eventos na organização e na divulgação de eventos, tornando a aplicação um local para a pesquisa e descoberta de eventos para o público em geral, de maneira fácil e intuitiva, desenvolvido com Dart, Flutter e seus pacotes.
+## Tech Stack  
+- **Language**: Dart  
+- **Framework**: Flutter  
+- **State Management**: MobX  
+- **Project Structure**: Flutter Modular  
+- **Dependency Injection**: get_it  
+- **QR Code**: qr_flutter  
+- **Backend**: Firebase (Authentication, Cloud Firestore, Storage)  
 
-[TCC - Allan Alves - Temparty.pdf](https://github.com/4llankayan/temparty_app/files/10525126/TCC.-.Allan.Alves.-.Temparty.pdf)
+## Features  
+- User registration & authentication (Firebase).  
+- Event browsing, search, and saving.  
+- Secure digital invitations with QR Codes (downloadable as PDF).  
+- Offline access to invitations.  
+- Organizer mode: create, edit, and manage events.  
+
+## Requirements
+- Flutter SDK >= 3.x  
+- Dart >= 2.x  
+- Firebase project configured (auth, database, storage).
+
+## Future Improvements
+- Payment integration for invitations.
+- Organizer dashboards with analytics.
+- Advanced event filtering & search.
+- Social features (followers, comments, posts).
